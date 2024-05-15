@@ -1,0 +1,192 @@
+#INTRODUCTION 
+
+HT: Group Anagrams ( ** Interview Question)
+Implement a function called groupAnagrams() that groups a list of strings based on their anagram equivalence.
+
+
+
+Input:
+The function takes a constant reference to a vector of strings strings.
+
+
+
+Output:
+The function should return a vector of vectors of strings, where each inner vector contains a group of anagram-equivalent strings. The order of the groups and the strings within the groups does not matter.
+
+
+
+Constraints:
+
+The input strings may contain any printable ASCII characters.
+
+The length of each string in the input vector may range from 1 to 100.
+
+
+
+Examples:
+
+Consider the following input vector:
+
+strings: {"eat", "tea", "tan", "ate", "nat", "bat"}
+After calling groupAnagrams(strings), the result could be (order of groups and strings within groups does not matter):
+
+{
+    {"eat", "tea", "ate"},
+    {"tan", "nat"},
+    {"bat"}
+}
+
+
+
+
+Consider the following input vector:
+
+strings: {"cab", "tin", "pew", "duh", "may", "ill", "buy", "bar", "max", "doc"}
+After calling groupAnagrams(strings), the result could be (order of groups and strings within groups does not matter):
+
+{
+    {"cab"},
+    {"tin"},
+    {"pew"},
+    {"duh"},
+    {"may"},
+    {"ill"},
+    {"buy"},
+    {"bar"},
+    {"max"},
+    {"doc"}
+}
+
+
+
+
+Consider the following input vector:
+
+strings: {"hello", "world", "drolw", "lehol", "orwld"}
+After calling groupAnagrams(strings), the result could be (order of groups and strings within groups does not matter):
+
+{
+    {"hello", "lehol"},
+    {"world", "drolw", "orwld"}
+}
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called anagramGroups
+
+For each string str in the input vector strings
+
+Create a copy of str called canonical
+
+Sort canonical
+
+Add str to the vector corresponding to the sorted canonical string in anagramGroups
+
+Create an empty vector of vectors called result
+
+For each key-value pair (group) in anagramGroups
+
+Add the value (group.second) to the result vector
+
+Return the result vector
+
+#SOLUTION
+
+vector<vector<string>> groupAnagrams(const vector<string>& strings) {
+    unordered_map<string, vector<string>> anagramGroups;
+ 
+    for (const string& str : strings) {
+        string canonical = str;
+        sort(canonical.begin(), canonical.end());
+ 
+        anagramGroups[canonical].push_back(str);
+    }
+ 
+    vector<vector<string>> result;
+    for (const auto& group : anagramGroups) {
+        result.push_back(group.second);
+    }
+ 
+    return result;
+}
+
+
+
+
+The groupAnagrams function takes a constant reference to a vector of strings named strings as its input and returns a vector of vectors containing groups of anagrams.
+
+Here's a step-by-step explanation of the code:
+
+
+
+unordered_map<string, vector<string>> anagramGroups;
+
+An unordered_map named anagramGroups is created. It has strings as keys and vectors of strings as values. This map will be used to store groups of anagrams based on their sorted canonical forms.
+
+for (const string& str : strings) { ... }
+
+This for loop iterates over each string (str) in the strings vector.
+
+string canonical = str;
+
+Inside the for loop, a new string named canonical is created and initialized with the value of the current string (str).
+
+sort(canonical.begin(), canonical.end());
+
+The canonical string is sorted in alphabetical order.
+
+anagramGroups[canonical].push_back(str);
+
+The current string (str) is added to the vector associated with the sorted canonical string in the anagramGroups map.
+
+vector<vector<string>> result;
+
+A vector of vectors of strings named result is created. This vector will store the final groups of anagrams.
+
+for (const auto& group : anagramGroups) { ... }
+
+This for loop iterates over each key-value pair (group) in the anagramGroups map.
+
+result.push_back(group.second);
+
+Inside the for loop, the value (i.e., the vector of strings) of the current key-value pair (group) is added to the result vector.
+
+return result;
+
+After the second for loop, the result vector containing the groups of anagrams is returned.
+
+
+
+
+
+Code with inline comments:
+
+
+
+vector<vector<string>> groupAnagrams(const vector<string>& strings) {
+    // Map to store anagram groups with canonical forms as keys
+    unordered_map<string, vector<string>> anagramGroups;
+ 
+    for (const string& str : strings) {
+        // Create the canonical form by sorting the string
+        string canonical = str;
+        sort(canonical.begin(), canonical.end());
+ 
+        // Add the string to its anagram group
+        anagramGroups[canonical].push_back(str);
+    }
+ 
+    // Vector to store the final result
+    vector<vector<string>> result;
+ 
+    // Iterate through anagram groups
+    for (const auto& group : anagramGroups) {
+        // Add the anagram group to the result
+        result.push_back(group.second);
+    }
+ 
+    // Return the grouped anagrams
+    return result;
+}

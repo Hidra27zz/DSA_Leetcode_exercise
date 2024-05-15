@@ -1,0 +1,300 @@
+#INTRODUCTION 
+
+DLL: Swap Nodes in Pairs ( ** Interview Question)
+
+ATTENTION: Advanced Doubly Linked List Challenge Ahead!
+
+This question is acknowledged as one of the more intricate challenges within the Doubly Linked List section. It's not unusual for students to find this task quite formidable at this point in the course.
+
+If you're considering diving into this problem, it's crucial to approach it methodically. I recommend drawing out the list structures and operations to better visualize the problem. This challenge demands a deep understanding of Doubly Linked Lists' unique characteristics and manipulation techniques.
+
+Use this opportunity to deepen your understanding, but also remember it's absolutely fine to come back to this problem later if it feels overwhelming now. Progress in complex concepts like these sometimes requires stepping back and revisiting with fresh insights. Good luck, and remember that perseverance is key in mastering these advanced topics!
+
+Now, here is the problem:
+
+_________________________________
+
+
+
+Implement a member function called swapPairs() that swaps the values of every two adjacent nodes in the list.
+
+Note: This DoublyLinkedList does not have a tail pointer which will make the implementation easier.
+
+
+
+Input:
+The function is a member of the DoublyLinkedList class, which has a head and a tail pointer, as well as a length attribute.
+
+
+
+Output:
+No explicit output is returned. However, the function should modify the doubly linked list such that the values of every two adjacent nodes are swapped.
+
+
+
+Constraints:
+The doubly linked list may be empty, have only one node, or have two or more nodes.
+
+
+
+Example:
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 6
+Length: 6
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6
+
+
+After calling swapPairs(), the list should be:
+
+Head: 2
+Tail: 5
+Length: 6
+ 
+Doubly Linked List:
+2 <-> 1 <-> 4 <-> 3 <-> 6 <-> 5
+
+
+
+
+
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 5
+Length: 5
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 4 <-> 5
+
+
+After calling swapPairs(), the list should be:
+
+Head: 2
+Tail: 4
+Length: 5
+ 
+Doubly Linked List:
+2 <-> 1 <-> 4 <-> 3 <-> 5
+
+
+Note that the pointers to the nodes themselves are updated to achieve the swapping of adjacent nodes.  Do not update the values of the nodes.z
+
+#HINT
+
+Pseudo Code:
+
+As you work through the pseudo-code, I recommend sketching the nodes, pointers, and each step on paper. This visual representation will greatly aid in understanding and tracking the process.
+
+
+Create a dummy node with a value of 0 and set its next pointer to the head of the list.
+
+Initialize a prev pointer to the dummy node.
+
+While the current head is not null and the next node after head is not null:
+
+Create pointers to the first and second nodes in the current pair.
+
+Update the next pointer of prev to point to the second node in the pair.
+
+Update the next pointer of the first node to point to the node after the second node in the pair.
+
+Update the next pointer of the second node to point to the first node.
+
+Update the prev pointers of the first and second nodes, and the node after the first node (if it exists).
+
+Move the head pointer to the node after the first node in the pair.
+
+Update the prev pointer to the first node.
+
+Set the head of the list to the next pointer of the dummy node.
+
+#SOLUTION
+
+        void swapPairs() {
+            Node dummyNode(0);
+            dummyNode.next = head;
+            Node* previousNode = &dummyNode;
+        
+            while (head != nullptr && head->next != nullptr) {
+                Node* firstNode = head;
+                Node* secondNode = head->next;
+        
+                previousNode->next = secondNode;
+                firstNode->next = secondNode->next;
+                secondNode->next = firstNode;
+        
+                secondNode->prev = previousNode;
+                firstNode->prev = secondNode;
+                if (firstNode->next != nullptr) {
+                    firstNode->next->prev = firstNode;
+                }
+        
+                head = firstNode->next;
+                previousNode = firstNode;
+            }
+        
+            head = dummyNode.next;
+            if (head) head->prev = nullptr;
+        }
+
+
+
+
+The swapPairs function aims to swap adjacent nodes in a doubly linked list.
+
+Here is an in-depth explanation of the code:
+
+
+
+Overview
+
+The code swaps each pair of adjacent nodes in a doubly linked list.
+
+For example, if our list was 1 <-> 2 <-> 3 <-> 4, after swapping it will be 2 <-> 1 <-> 4 <-> 3.
+
+
+
+Detailed Breakdown
+
+Starting Off
+
+Node dummyNode(0);
+dummyNode.next = head;
+Node* previousNode = &dummyNode;
+We create a dummyNode with value 0 and point its next to the head node of the list. This is a trick to simplify the code for edge cases.
+
+We also create a pointer previousNode pointing to dummyNode. This will help us to keep track of the node just before the nodes we are about to swap.
+
+
+
+The Loop
+
+while (head != nullptr && head->next != nullptr) {
+This loop will keep running as long as there are at least two more nodes to swap (head and head->next).
+
+
+
+Inside the Loop
+
+Node* firstNode = head;
+Node* secondNode = head->next;
+We assign firstNode to head and secondNode to the next node after head.
+
+
+
+previousNode->next = secondNode;
+firstNode->next = secondNode->next;
+secondNode->next = firstNode;
+These lines perform the actual swap:
+
+We first connect previousNode to secondNode.
+
+Then, we rearrange the next pointers of firstNode and secondNode to swap their positions.
+
+
+
+secondNode->prev = previousNode;
+firstNode->prev = secondNode;
+Since it's a doubly linked list, we must also update the prev pointers to maintain the integrity of the list after the swap.
+
+
+
+if (firstNode->next != nullptr) {
+    firstNode->next->prev = firstNode;
+}
+This line ensures that if firstNode->next exists, its prev pointer correctly points back to firstNode.
+
+
+
+head = firstNode->next;
+previousNode = firstNode;
+We move the head and previousNode pointers for the next iteration.
+
+
+
+Final Steps
+
+head = dummyNode.next;
+Finally, we update the head of our list. Remember that we started with a dummyNode; the actual list starts from dummyNode.next.
+
+
+
+if (head) head->prev = nullptr;
+We set the prev pointer of the new head to nullptr since there's no node before the head.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void swapPairs() {
+    // Create a dummyNode with value 0. This node serves as
+    // a placeholder that sits before the actual head node.
+    // This makes it easier to swap the head node later.
+    Node dummyNode(0);
+    
+    // Connect the next pointer of dummyNode to the current 
+    // head of the linked list. This links dummyNode to
+    // the first node in the list.
+    dummyNode.next = head;
+    
+    // Initialize previousNode to point to dummyNode.
+    // This node helps us keep track of the last node we 
+    // visited as we traverse the list.
+    Node* previousNode = &dummyNode;
+ 
+    // Begin a loop that continues as long as there are 
+    // at least two more nodes to swap.
+    while (head != nullptr && head->next != nullptr) {
+        
+        // Initialize firstNode and secondNode to point to the
+        // two nodes we will swap. firstNode points to what
+        // head is pointing to, and secondNode points to the
+        // node right after firstNode.
+        Node* firstNode = head;
+        Node* secondNode = head->next;
+ 
+        // Unlink firstNode and secondNode from the list and
+        // link secondNode to previousNode.
+        previousNode->next = secondNode;
+        
+        // Unlink secondNode from its next node and link 
+        // it to firstNode.
+        firstNode->next = secondNode->next;
+        
+        // Link secondNode back to firstNode.
+        secondNode->next = firstNode;
+ 
+        // Update the 'prev' pointers to maintain the
+        // doubly-linked list structure.
+        secondNode->prev = previousNode;
+        firstNode->prev = secondNode;
+        
+        // If a node exists after firstNode, update its 'prev'
+        // to point back to firstNode.
+        if (firstNode->next != nullptr) {
+            firstNode->next->prev = firstNode;
+        }
+ 
+        // Move head and previousNode pointers to their
+        // next positions for the following iteration.
+        head = firstNode->next;
+        previousNode = firstNode;
+    }
+ 
+    // After all pairs are swapped, update the actual 
+    // head of the list to point to the new first node.
+    head = dummyNode.next;
+    
+    // Ensure the 'prev' of the new head node is null.
+    if (head) head->prev = nullptr;
+}

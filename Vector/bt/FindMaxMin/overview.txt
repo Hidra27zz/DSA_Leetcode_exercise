@@ -1,0 +1,224 @@
+#INTRUCTIONS
+
+Vector: Find Max Min ( ** Interview Question)
+Title: Finding the Maximum and Minimum Values in a List
+
+Introduction: Often in data processing or while analyzing a set of numbers, two primary metrics we are interested in are the highest (maximum) value and the lowest (minimum) value. The challenge here is to efficiently find these two metrics without sorting the list or using any external libraries.
+
+Objective: Write a function that takes a list of integers and returns a new list containing two elements: the maximum and the minimum value in the input list.
+
+Detailed Requirements:
+
+Input:
+
+A vector of integers (myList). It can be assumed that the list has at least one number. There's no defined maximum length for the list.
+
+Output:
+
+A new vector containing exactly two integers:
+
+The first integer represents the maximum value found in myList.
+
+The second integer represents the minimum value found in myList.
+
+Examples:
+
+Example 1:
+
+Input:
+
+myList: [3, 7, 2, 9, 5]
+
+Output:
+
+[9, 2]
+
+Example 2:
+
+Input:
+
+myList: [5, 5, 5, 5, 5]
+
+Output:
+
+[5, 5] (Even if all numbers are the same, both the maximum and minimum are that number.)
+
+
+
+Tips:
+
+Consider initializing your maximum and minimum values with the first element of the list. This way, you have a starting point for comparison.
+
+Use a single loop to traverse the list, comparing each element with your current maximum and minimum. Update the values accordingly based on the comparisons.
+
+The order in the output list matters; the maximum value should always be the first element.
+
+
+
+Remember, the objective is not just to find the maximum or minimum value but both within a single traversal of the list. Efficiency is key, and the task should be accomplished without sorting the list or using multiple loops.
+
+
+#HINT
+
+Pseudo Code:
+
+Objective: To find both the maximum and minimum values from a list myList and return them as a list containing two elements.
+
+Procedure:
+
+Initialization:
+
+Assume that the first element of the list myList is the current maximum value. Store this value in a variable called maximum.
+
+Similarly, assume that the first element of the list myList is the current minimum value. Store this value in a variable called minimum.
+
+Iterate over the List:
+
+Use a loop to iterate over each element of the list myList. Let's call the current element being examined num.
+
+Comparison to Find Maximum and Minimum:
+
+Within the loop: a. Check for a New Maximum: i. Compare the current element num with the stored maximum value. ii. If num is greater than the current maximum: - Update maximum to be the value of num.
+
+b. Check for a New Minimum: i. Compare the current element num with the stored minimum value. ii. If num is less than the current minimum: - Update minimum to be the value of num.
+
+Continue Iteration:
+
+Move to the next element in the list myList and repeat the comparison process until all elements in the list have been examined.
+
+Return the Result:
+
+After the loop completes, create a new list containing the final values of maximum and minimum in that order.
+
+Return this new list as the result of the function.
+
+End Procedure:
+
+The function returns a list containing two elements: the maximum value found in myList and the minimum value found in myList.
+
+
+
+Through this procedure, the algorithm iterates through the list only once, making it efficient. It constantly updates the maximum and minimum values based on the elements it encounters, ensuring that by the end of the iteration, it has identified the true maximum and minimum values of the list.
+
+#SOLUTION
+
+vector<int> findMaxMin(vector<int>& myList) {
+    int maximum = myList[0];
+    int minimum = myList[0];
+    for (int num : myList) {
+        if (num > maximum) {
+            maximum = num;
+        } else if (num < minimum) {
+            minimum = num;
+        }
+    }
+    return vector<int> {maximum, minimum};
+}
+
+
+
+
+The purpose of the findMaxMin function is to search through a given vector of integers (myList) and return a new vector containing two integers: the maximum and minimum values found within myList.
+
+
+
+Here's a step-by-step breakdown:
+
+
+
+1. Function Signature:
+
+vector<int> findMaxMin(vector<int>& myList)
+This indicates that the function is named findMaxMin and it returns a vector containing integers. The function accepts one argument:
+
+vector<int>& myList: This is a reference to a vector of integers named myList. Because it's passed by reference (indicated by the &), it allows the function to access the original list directly. However, in this function, we only read from myList and don't modify it.
+
+
+
+2. Initializing maximum and minimum:
+
+int maximum = myList[0];
+int minimum = myList[0];
+Here, we initialize two integer variables, maximum and minimum, both set to the first value of the myList vector. We use these as starting points for comparison. Since we're checking every element in the list, starting with the first value ensures that we capture all potential maxima and minima.
+
+
+
+3. Looping through the vector:
+
+for (int num : myList)
+This is a range-based for loop in C++, which simplifies the syntax for iterating over containers. It means "for each integer num in the vector myList".
+
+
+
+4. Checking for a new maximum:
+
+if (num > maximum) {
+    maximum = num;
+}
+For each number num in the vector, we check if it's greater than our current maximum. If it is, then num becomes the new maximum value.
+
+
+
+5. Checking for a new minimum:
+
+else if (num < minimum) {
+    minimum = num;
+}
+Similarly, if num is less than our current minimum, then num becomes the new minimum value.
+
+Note: The use of else if here is efficient because if the first condition (num > maximum) is true, the second condition (num < minimum) won't be checked. This is because a number can't be both greater than the maximum and less than the minimum at the same time.
+
+
+
+6. Constructing the result:
+
+return vector<int> {maximum, minimum};
+After the loop completes, we've identified both the maximum and minimum values from the myList vector. We then create a new vector containing these two values (with the maximum value first, followed by the minimum value) and return it.
+
+
+
+In Summary: The findMaxMin function efficiently identifies and returns the maximum and minimum values from a given list of integers. It initializes the max and min values with the first element of the list, then iterates through the list once, updating these values as needed based on comparisons. The resulting max and min values are then packaged into a new vector and returned.
+
+
+
+
+
+Code with inline comments:
+
+
+
+/**
+ * Finds the maximum and minimum values from a list of integers.
+ *
+ * @param myList: The list of integers.
+ * @return A vector containing two integers: [maximum, minimum].
+ */
+vector<int> findMaxMin(vector<int>& myList) {
+    
+    // Initialize 'maximum' and 'minimum' to the first value 
+    // in 'myList'. This provides a starting point for 
+    // comparison with the rest of the list's values.
+    int maximum = myList[0];
+    int minimum = myList[0];
+    
+    // Iterate through each number in 'myList'.
+    for (int num : myList) {
+        
+        // If 'num' is greater than our current 'maximum',
+        // update 'maximum' to this new value.
+        if (num > maximum) {
+            maximum = num;
+        } 
+        // If 'num' is less than our current 'minimum',
+        // update 'minimum' to this new value.
+        else if (num < minimum) {
+            minimum = num;
+        }
+        // If 'num' is neither greater than 'maximum' nor 
+        // less than 'minimum', we proceed to the next iteration.
+    }
+    
+    // Once all numbers have been examined, return a new 
+    // vector containing the found 'maximum' and 'minimum' values.
+    return vector<int> {maximum, minimum};
+}

@@ -1,0 +1,307 @@
+#INTRODUCTION 
+
+LL: Binary to Decimal ( ** Interview Question)
+Objective:
+
+You have a linked list where each node represents a binary digit (0 or 1). The goal of the binaryToDecimal function is to convert this binary number, represented by the linked list, into its decimal equivalent.
+
+
+
+Function Signature:
+
+int binaryToDecimal()
+
+
+
+How Binary to Decimal Conversion Works:
+
+In binary-to-decimal conversion, each position of a binary number corresponds to a specific power of 2, starting from the rightmost digit.
+
+The rightmost digit is multiplied by 2^0 (which equals 1).
+
+The next digit to the left is multiplied by 2^1 (which equals 2).
+
+The digit after that is multiplied by 2^2 (which equals 4). ... and so on.
+
+To find the decimal representation:
+
+Multiply each binary digit by its corresponding power of 2 value.
+
+Sum up all these products.
+
+
+
+Example Execution with Binary 101:
+
+Start with num = 0.
+
+Process 1 (from the head of the linked list): num = 0 * 2 + 1 = 1
+
+Process 0: num = 1 * 2 + 0 = 2
+
+Process 1: num = 2 * 2 + 1 = 5
+
+Return num, which is 5.
+
+
+
+Steps Involved in the Function:
+
+A variable num is initialized to 0, which will store our computed decimal number.
+
+Starting from the head of the linked list (the leftmost binary digit), iterate through each node until the end.
+
+For every node, double the current value of num (this is analogous to shifting in binary representation). Then, add the binary digit of the current node.
+
+Move to the next node and repeat until you've visited all nodes.
+
+Return the value in num, which now represents the decimal value of the binary number in the linked list.
+
+#HINT
+
+Pseudo Code:
+
+1. Start with a variable called 'num' and set it to 0.
+
+   This will store our resulting decimal number.
+
+   
+
+2. Create a pointer called 'current' and set it to point to the start of the linked list (the head).
+
+
+
+3. Begin a loop. Continue this loop as long as 'current' is not pointing to nothing (i.e., as long as we haven't reached the end of the list).
+
+
+
+   a. Inside the loop, the first step is to double the current value of 'num'.
+
+      This is like making space for the next binary digit.
+
+      Imagine we are reading a binary number from left to right.
+
+      Each time we move to the next position, we're shifting everything
+
+      to the left, which is equivalent to doubling in the binary system.
+
+     
+
+   b. Add the value of the node that 'current' is pointing to, to 'num'.
+
+      This value will be either 0 or 1 since it's a binary digit.
+
+      Now 'num' contains the accumulated value up to the current binary digit.
+
+
+
+   c. Move the 'current' pointer to the next node in the list to continue
+
+      the loop for the next binary digit.
+
+
+
+4. Once the loop finishes (we've processed all binary digits), return the value of 'num' which now contains the decimal representation of the binary number in the linked list.
+
+#SOLUTION
+
+        int binaryToDecimal() {
+            int num = 0;
+            Node* current = head;
+            while (current != nullptr) {
+                num = num * 2 + current->value;
+                current = current->next;
+            }
+            return num;
+        }
+
+
+
+
+This function, binaryToDecimal, is a member function of the LinkedList class. Its purpose is to treat the values of the nodes in the linked list as binary digits and convert this binary representation into its decimal form.
+
+Here's a detailed explanation:
+
+Function Declaration:
+
+int binaryToDecimal() {
+This line tells us that the function binaryToDecimal is a member of the LinkedList class, and it returns an int type value.
+
+
+
+Initialize the Decimal Number:
+
+int num = 0;
+We initialize a variable called num with 0. This variable will store the decimal representation of the binary number.
+
+
+
+Initialize the Current Node Pointer:
+
+Node* current = head;
+We create a pointer named current that initially points to the head of the LinkedList. This pointer will be used to traverse (or walk-through) the linked list.
+
+
+
+The Loop:
+
+while (current != nullptr) {
+This loop will continue as long as the current pointer is not pointing to nullptr. In simple terms, we will keep looping through the linked list until we have seen all the nodes.
+
+
+
+Inside the Loop:
+
+     Binary to Decimal Conversion:
+
+num = num * 2 + current->value;
+This is the core logic for converting a binary number to its decimal representation. The idea is to take the current decimal value, double it (num * 2), and then add the binary digit stored in the current node (current->value, which will be either 0 or 1).
+
+For example, if you have the binary number 110, the operations will look like this:
+
+Start with num as 0.
+
+For the first binary digit (1): num = 0 * 2 + 1 = 1
+
+For the second binary digit (1): num = 1 * 2 + 1 = 3
+
+For the third binary digit (0): num = 3 * 2 + 0 = 6
+
+If this still does not make sense please see the more detailed explanation of the logic at the bottom.
+
+
+
+Move to the Next Node:
+
+current = current->next;
+This line updates the current pointer to point to the next node in the linked list. Essentially, we're moving our position in the linked list to the next node.
+
+
+
+End of the Loop: Once we've processed all the nodes in the linked list, the loop will end because current will be nullptr (indicating the end of the list).
+
+
+
+Return the Decimal Number:
+
+return num;
+Finally, we return the decimal number (num) that we've calculated.
+
+
+
+
+
+Code with inline comments:
+
+
+
+int binaryToDecimal() {
+    // We start with 'num' initialized to 0, this will hold our
+    // converted decimal value as we traverse the binary number.
+    int num = 0;
+ 
+    // 'current' points to the beginning of the linked list.
+    // If our binary number is 101, 'current' now points to the '1'
+    Node* current = head;
+ 
+    // We traverse the list until we've processed every binary digit.
+    while (current != nullptr) {
+        
+        // For each binary digit, we first prepare 'num' for the next digit.
+        // We do this by multiplying it by 2. In essence, we're making space
+        // for the next binary digit.
+        // If 'num' was 2 (in binary: 10), after this step it becomes 4 (in binary: 100).
+        num = num * 2;
+ 
+        // Now, we add the actual binary digit from our list to 'num'.
+        // If current binary digit is '1', we add 1 to 'num'.
+        // If current binary digit is '0', this step doesn't change 'num'.
+        num = num + current->value;
+ 
+        // Move to the next node, which represents the next binary digit.
+        current = current->next;
+    }
+    
+    // After we've processed all the binary digits in the linked list, 
+    // 'num' contains the equivalent decimal value. We return it.
+    return num;
+}
+
+
+
+
+Explanation Using Decimal as an Analogy:
+
+Constructing a Decimal Number: 123
+
+Concept: Every position in a decimal number represents a power of 10, starting from the rightmost position as 100100 (which is 1) and increasing to the left.
+
+
+
+Initialize:
+
+Start with a result of 0.
+
+Process the leftmost digit (1):
+
+Multiply the current result by 10 (since we're in base 10): result = 0 * 10 = 0
+
+Add the current digit: result = 0 + 1 = 1
+
+Process the next digit (2):
+
+Multiply the current result by 10: result = 1 * 10 = 10
+
+Add the current digit: result = 10 + 2 = 12
+
+Process the rightmost digit (3):
+
+Multiply the current result by 10: result = 12 * 10 = 120
+
+Add the current digit: result = 120 + 3 = 123
+
+Conclusion:
+
+At the end of this process, we've constructed the decimal number 123.
+
+
+
+Now, let's construct a binary number using the same method. We'll use the binary number 110 as an example.
+
+
+
+Constructing a Binary Number: 110
+
+Concept: Every position in a binary number represents a power of 2, starting from the rightmost position as 2020 (which is 1) and increasing to the left.
+
+
+
+Initialize:
+
+Start with a result of 0.
+
+Process the leftmost binary digit (1):
+
+Multiply the current result by 2 (since we're in base 2): result = 0 * 2 = 0
+
+Add the current binary digit: result = 0 + 1 = 1
+
+Process the next binary digit (1):
+
+Multiply the current result by 2: result = 1 * 2 = 2
+
+Add the current binary digit: result = 2 + 1 = 3
+
+Process the rightmost binary digit (0):
+
+Multiply the current result by 2: result = 3 * 2 = 6
+
+Add the current binary digit: result = 6 + 0 = 6
+
+Conclusion:
+
+At the end of this process, we've converted the binary number 110 into the decimal number 6.
+
+
+
+Both of these step-by-step processes follow the general principle of constructing numbers in positional notation. The only difference between them is the base: base-10 for decimal and base-2 for binary.

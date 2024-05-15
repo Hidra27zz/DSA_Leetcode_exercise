@@ -1,0 +1,140 @@
+#INTRODUCTION 
+
+DLL: Palindrome Checker ( ** Interview Question)
+Implement a member function called isPalindrome() that checks if the list is a palindrome, i.e., its elements read the same forward and backward.
+
+
+
+Input:
+The function is a member of the DoublyLinkedList class, which has a head and a tail pointer, as well as
+a length attribute.
+
+
+
+Output:
+The function should return a boolean value indicating whether the doubly linked list is a palindrome or not.
+
+
+
+Constraints:
+The doubly linked list may be empty, have only one node, or have two or more nodes.
+
+
+
+Example:
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 1
+Length: 5
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 2 <-> 1
+After calling isPalindrome(), the result should be true as the list is a palindrome.
+
+
+
+
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 5
+Length: 5
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 4 <-> 5
+After calling isPalindrome(), the result should be false as the list is not a palindrome.
+
+
+
+#HINT
+
+Pseudo Code:
+
+If the length of the list is less than or equal to 1, return true since an empty list or a single-element list is always a palindrome.
+
+Initialize two pointers: forwardNode pointing to the head of the list, and backwardNode pointing to the tail of the list.
+
+Iterate through the list for length / 2 iterations (i.e., iterate through half of the list):
+
+Compare the values of forwardNode and backwardNode.
+
+If they are not equal, return false because the list is not a palindrome.
+
+Move the forwardNode to the next node in the list, and move the backwardNode to the previous node in the list.
+
+If the loop completes without finding any unequal values, return true because the list is a palindrome.
+
+#SOLUTION
+
+        bool isPalindrome() {
+            if (length <= 1) return true;
+        
+            Node* forwardNode = head;
+            Node* backwardNode = tail;
+            for (int i = 0; i < length / 2; i++) {
+                if (forwardNode->value != backwardNode->value) return false;
+                forwardNode = forwardNode->next;
+                backwardNode = backwardNode->prev;
+            }
+            return true;
+        }
+
+
+
+
+The isPalindrome member function is part of a DoublyLinkedList class.
+
+The method checks if the doubly linked list is a palindrome, meaning it reads the same forwards and backwards.
+
+Here's a step-by-step explanation of the code:
+
+if (length <= 1) return true;: If the length of the linked list is 1 or less, it is considered a palindrome, so return true.
+
+Node* forwardNode = head;: A pointer to a Node object named forwardNode is created and initialized to the head of the linked list. It will be used to traverse the list from the beginning.
+
+Node* backwardNode = tail;: A pointer to a Node object named backwardNode is created and initialized to the tail of the linked list. It will be used to traverse the list from the end.
+
+for (int i = 0; i < length / 2; i++) { ... }: This for loop iterates through half of the linked list, comparing the nodes from the beginning and the end.
+
+if (forwardNode->value != backwardNode->value) return false;: If the values of the forwardNode and backwardNode are not equal, the linked list is not a palindrome, so return false.
+
+forwardNode = forwardNode->next;: Update the forwardNode pointer to point to the next node in the list, moving the iteration forward.
+
+backwardNode = backwardNode->prev;: Update the backwardNode pointer to point to the previous node in the list, moving the iteration backward.
+
+return true;: If the loop completes without finding a mismatch between the forwardNode and backwardNode values, the linked list is a palindrome, so return true.
+
+
+
+Code with inline comments:
+
+
+
+bool isPalindrome() {
+    // Return true if list has 0 or 1 element
+    if (length <= 1) return true;
+ 
+    // Initialize forwardNode pointer to head node
+    Node* forwardNode = head;
+ 
+    // Initialize backwardNode pointer to tail node
+    Node* backwardNode = tail;
+ 
+    // Iterate through half of the list
+    for (int i = 0; i < length / 2; i++) {
+        // Check if forwardNode and backwardNode values match
+        if (forwardNode->value != backwardNode->value) return false;
+ 
+        // Move forwardNode pointer to the next node
+        forwardNode = forwardNode->next;
+ 
+        // Move backwardNode pointer to the previous node
+        backwardNode = backwardNode->prev;
+    }
+ 
+    // If all pairs of values matched, return true
+    return true;
+}

@@ -1,0 +1,211 @@
+Vector: Remove Element ( ** Interview Question)
+Title: Remove Specific Element from an Array
+
+Introduction: Imagine you have a collection of items (represented by numbers), and you want to get rid of every occurrence of a specific item without using extra storage or another collection. The task is to perform this action using as minimal space as possible and in the most efficient way.
+
+Objective: Write a function that takes in two parameters: a list of numbers (nums) and a target number (val). The goal is to remove all occurrences of the target number from the list without creating a new list. After the removals, the list should not have any gaps between the remaining numbers. The function should not return the modified list since it will be modified in place; however, the function should resize the list so that the remaining length matches the number of items left after the removals.
+
+Detailed Requirements:
+
+Input:
+
+A list of numbers (nums). The list can be of any length, including zero.
+
+A target number (val). This is the number you want to remove from the list.
+
+Output:
+
+The function should not return any value. However, the input list (nums) should be modified in place.
+
+After the function is executed, the list (nums) should contain only the numbers that are not equal to the target number (val), and there should be no gaps between them.
+
+The order of the other numbers (those not equal to val) in the list should remain the same.
+
+Examples:
+
+Example 1:
+
+Input:
+
+nums: [3, 2, 3, 6, 3, 4, 5, 3]
+
+val: 3
+
+Output:
+
+Modified nums: [2, 6, 4, 5]
+
+Example 2:
+
+Input:
+
+nums: [1, 2, 3, 4, 5]
+
+val: 10
+
+Output:
+
+Modified nums: [1, 2, 3, 4, 5] (No changes because 10 is not in the list.)
+
+Tips:
+
+Try to avoid using extra space or another collection to store intermediate results. The goal is to modify the list in place.
+
+Think of how you can keep track of which numbers to keep and which ones to discard while iterating through the list.
+
+After removing the occurrences of val, ensure that the remaining numbers in the list are tightly packed without any gaps.
+
+Resizing the list at the end can help remove any extraneous values that may be left over from the original list.
+
+Remember, the key is efficiency. The task should be achieved by making a single pass through the list without the need for nested loops or additional collections.
+
+Pseudo Code:
+
+Objective: To remove all occurrences of a specified value val from a list nums.
+
+
+
+#HINT
+
+Procedure:
+
+Initialization:
+
+Set up two pointers:
+
+i: Will be used to keep track of the position where elements not equal to val should be placed.
+
+j: Will be used to iterate over each element of the list nums.
+
+Start both i and j at the beginning of the list, i.e., set i = 0 and j = 0.
+
+Iterate over the List:
+
+Use a loop to iterate over each element of the list using the j pointer, starting from the first element to the last element.
+
+Check Element against val:
+
+Within the loop: a. Check if the current element pointed to by j (nums[j]) is NOT equal to val. b. If nums[j] is NOT equal to val: i. Copy the value from nums[j] to the position indicated by the i pointer, i.e., nums[i] = nums[j]. ii. Increment the i pointer by 1, to move to the next position.
+
+Continue Iteration:
+
+Increment the j pointer by 1 to move to the next element in the list.
+
+Continue the loop until all elements in the list have been checked.
+
+Resize the List:
+
+After the loop completes, i will point to the position immediately after the last valid element in the list.
+
+Resize the list to keep only the elements from the beginning up to the position indicated by i (exclusive). This effectively removes all occurrences of val from the list.
+
+End Procedure:
+
+The function doesn't return any value, but the list nums passed to the function will have all occurrences of val removed.
+
+By using this procedure, the algorithm avoids the need to physically remove elements from the list, which can be time-consuming. Instead, it re-arranges the list in a way that all valid elements (those not equal to val) are packed at the beginning, and then resizes the list to discard the unwanted elements.
+
+
+#SOLUTION
+
+void removeElement(vector<int>& nums, int val) {
+    size_t i = 0;
+    for (size_t j = 0; j < nums.size(); j++) {
+        if (nums[j] != val) {
+            nums[i] = nums[j];
+            i++;
+        }
+    }
+    nums.resize(i);
+}
+
+The purpose of the code is to modify a given vector by removing all occurrences of a specific value. This is done without using any additional storage, which means the modification is done "in place" within the original vector.
+
+The code uses a two-pointer technique, where:
+
+i serves as the position where we can put a value that's "good" (a value we don't want to remove).
+
+j serves as our explorer, moving through the vector to find values that are "good".
+
+Here's the logic:
+
+1. Function Signature:
+
+void removeElement(vector<int>& nums, int val)
+This indicates that the function is named removeElement and it returns no value (void). The function accepts two arguments:
+
+vector<int>& nums: This is a reference to a vector of integers. The & means it's a reference, so any changes made to nums inside the function will be reflected outside the function as well.
+
+int val: This is the integer value that we wish to remove from the nums vector.
+
+2. Initialization:
+
+size_t i = 0;
+This declares a variable named i and initializes it to 0. The type size_t is often used to represent sizes of containers (like vectors) or indices.
+
+3. Iterating through the vector with j:
+
+cppCopy code
+for (size_t j = 0; j < nums.size(); j++)
+j will explore every element in the vector. It begins at the start and goes to the end.
+
+4. Checking each value:
+
+if (nums[j] != val)
+For every position j, we check if the current value is the one we want to keep. If the value at position j is NOT the value we're trying to remove, then we want to keep it.
+
+5. Placing the value in the position i:
+
+nums[i] = nums[j];
+If the condition is true (which means the current value at j isn't the one we're trying to remove), we place this value in the position indicated by i. If j and i are pointing at the same position, then this operation is like saying "the value at this position is good, let's leave it here". If j has moved ahead of i, it means we've found some values we don't want, so placing the value at j into position i effectively compresses the vector, skipping over the unwanted values.
+
+6. Moving the i pointer:
+
+i++;
+Once we've moved a "good" value to the position i, we increment i. This means the next time we find a "good" value, we will place it immediately after the previous one. This step ensures there are no gaps between the values we're keeping.
+
+7. Removing excess values:
+
+nums.resize(i);
+Once the loop is done, i points to the position immediately after the last "good" value. Resizing the vector to i ensures we remove all positions after that, which could be a mix of values we don't want and duplicates of the ones we've already placed earlier in the vector.
+
+In Summary: The main idea is to use two pointers to efficiently traverse and modify the vector. Pointer j is used to explore each value, while pointer i is used to place values we want to keep in the correct position. By the end, all the values we don't want are effectively squeezed out, and the vector is resized to only keep the desired values.
+
+Code with inline comments:
+
+/**
+
+* Modifies the input vector 'nums' to remove all occurrences
+* of the integer 'val'.
+*
+* @param nums: The list of integers.
+* @param val: The integer value to remove.
+ */
+void removeElement(vector<int>& nums, int val) {
+    // Initialize 'i' to track the next position to write
+    // to in 'nums' for values not equal to 'val'.
+    size_t i = 0;
+
+    // Iterate through each element in 'nums' using 'j'.
+    for (size_t j = 0; j < nums.size(); j++) {
+
+        // Check if the current value at index 'j' is different
+        // from 'val'.
+        if (nums[j] != val) {
+            
+            // If so, assign the value at 'j' to the position 'i'.
+            // This effectively retains this value in 'nums'.
+            nums[i] = nums[j];
+ 
+            // Move 'i' to the next position, preparing for 
+            // the next retained value.
+            i++;
+        }
+        // If the value at 'j' is the same as 'val', we don't 
+        // do anything and just proceed to the next iteration.
+    }
+
+    // After processing all elements, resize 'nums' to 'i'.
+    // This trims off any excess values beyond 'i'.
+    nums.resize(i);
+}

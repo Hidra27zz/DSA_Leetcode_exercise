@@ -1,0 +1,155 @@
+#INTRODUCTION 
+
+HT: First Non-Repeating Character ( ** Interview Question)
+Implement a function called firstNonRepeatingChar() that finds and returns the first non-repeating character in a given string.
+
+
+
+Input:
+The function takes a constant reference to a string input_string.
+
+
+
+Output:
+The function should return a character which is the first non-repeating character in the input string. If no non-repeating character is found, the function should return a null character ('\0').
+
+
+
+Constraints:
+
+The input string may contain any printable ASCII characters.
+
+
+
+Examples:
+
+Consider the following input string:
+
+input_string: "programming"
+After calling firstNonRepeatingChar(input_string), the result should be:
+
+'p'
+
+
+
+
+Consider the following input string:
+
+input_string: "truetalent"
+After calling firstNonRepeatingChar(input_string), the result should be:
+
+'r'
+
+
+
+
+Consider the following input string:
+
+input_string: "aabbcc"
+After calling firstNonRepeatingChar(input_string), the result should be:
+
+'\0'
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called charCounts
+
+For each character c in the input string
+
+Increment the count of c in charCounts
+
+For each character c in the input string
+
+If the count of c in charCounts is 1
+
+Return c
+
+If no non-repeating character is found, return a null character (i.e., '\0')
+
+
+
+#SOLUTION
+
+char firstNonRepeatingChar(const string& input_string) {
+    unordered_map<char, int> charCounts;
+ 
+    for (char c : input_string) {
+        charCounts[c]++;
+    }
+ 
+    for (char c : input_string) {
+        if (charCounts[c] == 1) {
+            return c;
+        }
+    }
+    
+    return '\0'; // Return a null character when no non-repeating character is found
+}
+
+
+
+
+The firstNonRepeatingChar function takes a constant reference to a string named input_string as its input and returns the first non-repeating character found in the string.
+
+Here's a step-by-step explanation of the code:
+
+
+
+unordered_map<char, int> charCounts;
+
+An unordered_map named charCounts is created. It has characters as keys and integers as values. This map will be used to store the counts of each character in the input_string.
+
+for (char c : input_string) { ... }
+
+This for loop iterates over each character (c) in the input_string.
+
+charCounts[c]++;
+
+Inside the for loop, the count of the current character (c) in the charCounts map is incremented by 1.
+
+for (char c : input_string) { ... }
+
+This for loop iterates over each character (c) in the input_string again.
+
+if (charCounts[c] == 1) { ... }
+
+Inside the for loop, an if statement checks if the count of the current character (c) in the charCounts map is equal to 1.
+
+return c;
+
+If the if statement's condition is true, it means the current character (c) is the first non-repeating character in the input_string. The function returns the character (c) as the result.
+
+return '\0';
+
+After the second for loop, if no non-repeating character is found, the function returns a null character ('\0') as the result.
+
+
+
+
+
+Code with inline comments:
+
+
+
+char firstNonRepeatingChar(const string& input_string) {
+    // Map to store character counts
+    unordered_map<char, int> charCounts;
+ 
+    // Iterate through the input string and count each character
+    for (char c : input_string) {
+        charCounts[c]++;
+    }
+ 
+    // Iterate through the input string again
+    for (char c : input_string) {
+        // Check if the character count is 1 (non-repeating)
+        if (charCounts[c] == 1) {
+            return c; // Return the first non-repeating character
+        }
+    }
+    
+    // Return a null character if no non-repeating character is found
+    return '\0'; 
+}

@@ -1,0 +1,150 @@
+#INTRODUCTION 
+
+DLL: Reverse ( ** Interview Question)
+Implement a member function called reverse() that reverses the order of the nodes in the list.
+
+Input:
+The function is a member of the DoublyLinkedList class, which has a head and a tail pointer, as well as a length attribute.
+
+
+
+Output:
+No explicit output is returned. However, the function should modify the doubly linked list such that the order of the nodes is reversed.
+
+
+
+Constraints:
+The doubly linked list may be empty, have only one node, or have two or more nodes.
+
+
+
+Example:
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 5
+Length: 5
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 4 <-> 5
+
+
+After calling reverse(), the list should be:
+
+Head: 5
+Tail: 1
+Length: 5
+ 
+Doubly Linked List:
+5 <-> 4 <-> 3 <-> 2 <-> 1
+
+
+Note that the list is reversed by updating the prev and next pointers of each node.
+
+#HINT
+
+Pseudo Code:
+
+Initialize a pointer current to the head of the list, and a temporary pointer temp to nullptr.
+
+While the current pointer is not null (i.e., traverse the entire list):
+
+Set temp to the prev pointer of the current node.
+
+Update the prev pointer of the current node to its next pointer.
+
+Update the next pointer of the current node to the temp pointer.
+
+Move the current pointer to its updated prev pointer (which was previously its next pointer).
+
+After the loop is complete, swap the head and tail pointers by:
+
+Setting temp to the current head.
+
+Setting the head to the current tail.
+
+Setting the tail to the temp pointer.
+
+
+
+#SOLUTION
+
+        void reverse() {
+            Node* current = head;
+            Node* temp = nullptr;
+        
+            while (current != nullptr) {
+                temp = current->prev;
+                current->prev = current->next;
+                current->next = temp;
+                current = current->prev;
+            }
+        
+            temp = head;
+            head = tail;
+            tail = temp;
+        }
+
+
+
+
+The reverse member function is part of a DoublyLinkedList class.
+
+The method reverses the order of the nodes in the doubly linked list.
+
+Here's a step-by-step explanation of the code:
+
+Node* current = head;: A pointer to a Node object named current is created and initialized to the head of the linked list. It will be used to traverse the list.
+
+Node* temp = nullptr;: A pointer to a Node object named temp is created and initialized to nullptr. It will be used to temporarily store the previous node pointer during the reversal process.
+
+while (current != nullptr) { ... }: This while loop iterates through the linked list until the current node is nullptr, indicating the end of the list.
+
+temp = current->prev;: Store the current node's previous pointer in the temp variable.
+
+current->prev = current->next;: Update the current node's previous pointer to point to its next node, effectively reversing the direction of the previous pointer.
+
+current->next = temp;: Update the current node's next pointer to point to the value stored in the temp variable, effectively reversing the direction of the next pointer.
+
+current = current->prev;: Update the current node pointer to point to the next node in the original order, moving the iteration forward.
+
+temp = head;: Store the original head of the linked list in the temp variable.
+
+head = tail;: Update the head of the linked list to point to the original tail, effectively making it the new head.
+
+tail = temp;: Update the tail of the linked list to point to the value stored in the temp variable, effectively making the original head the new tail.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void reverse() {
+    // Initialize current pointer to head node
+    Node* current = head;
+ 
+    // Initialize temp pointer to nullptr
+    Node* temp = nullptr;
+ 
+    // Iterate through the list
+    while (current != nullptr) {
+        // Save the previous node pointer in temp
+        temp = current->prev;
+ 
+        // Swap the previous and next pointers of the current node
+        current->prev = current->next;
+        current->next = temp;
+ 
+        // Move current pointer to the next node in reversed order
+        current = current->prev;
+    }
+ 
+    // Swap head and tail pointers
+    temp = head;
+    head = tail;
+    tail = temp;
+}

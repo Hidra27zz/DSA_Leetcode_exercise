@@ -1,0 +1,248 @@
+#INTRODUCTIONS
+
+Vector: Max Sub Array ( ** Interview Question)
+Title: Maximum Subarray Sum
+
+Introduction: In computer science, one of the frequently encountered problems is determining the subarray (a contiguous portion of an array) that has the largest sum. This problem can be found in various applications, from image processing to financial analysis.
+
+Objective: Given a list of integers, nums, find the contiguous subarray (which could contain at least one number) which has the largest sum, and return that sum.
+
+Detailed Requirements:
+
+Input:
+
+A list of integers, nums, representing the array. The list can be of any length, including being empty.
+
+Output:
+
+An integer value representing the sum of the contiguous subarray with the largest sum.
+
+Examples:
+
+Example 1:
+
+Input:
+
+nums: [-2,1,-3,4,-1,2,1,-5,4]
+
+Output:
+
+6
+
+Explanation:
+
+The contiguous subarray [4,-1,2,1] has the largest sum, which is 6.
+
+Example 2:
+
+Input:
+
+nums: [1]
+
+Output:
+
+1
+
+Explanation:
+
+The single integer in the array is both the maximum sum and the only subarray.
+
+Example 3:
+
+Input:
+
+nums: [5,4,-1,7,8]
+
+Output:
+
+23
+
+Explanation:
+
+The entire array forms the subarray with the maximum sum.
+
+
+
+Tips:
+
+An empty list should return a sum of 0.
+
+Utilizing the Kadane’s Algorithm, you can find the maximum subarray sum efficiently. The essence of this algorithm is to look for all positive contiguous segments of the array and to maintain a maximum sum contiguous segment among all positive segments.
+
+At each step, decide whether to extend the current subarray or start a new one fresh from the current element. This decision is made based on which option gives the higher sum.
+
+
+
+This problem tests a student's ability to think about optimization, as the naive approach of checking all subarrays would be highly inefficient for larger arrays.
+
+
+
+
+
+#HINT
+
+Pseudo Code:
+
+Objective: Find the maximum sum of any contiguous subarray of the given array nums.
+
+Procedure:
+
+Handle Empty Array:
+
+If the size of nums is 0: a. Return 0 as there's no subarray to consider.
+
+Initialize:
+
+Set maxSum to the first element of nums (This represents the maximum subarray sum found so far).
+
+Set currentSum to the first element of nums (This represents the sum of the current subarray being considered).
+
+Iterate through the Array:
+
+Start iterating from the second element (position 1) to the end of nums. a. Update currentSum to be the maximum of the current element (nums[i]) and the sum of currentSum and the current element (currentSum + nums[i]). This step effectively determines if it's better to start a new subarray from the current element or continue the existing subarray. b. Update maxSum to be the maximum of maxSum and currentSum. This keeps track of the maximum sum found so far.
+
+Return Result:
+
+After iterating through the entire array, return maxSum which now contains the maximum sum of any contiguous subarray.
+
+
+
+Note: This function employs the "Kadane's algorithm" for finding the maximum subarray sum. It works by iteratively examining the current subarray and deciding whether to continue the current subarray or start a new one. By the end, we have the maximum sum of any possible subarray.
+
+
+
+#SOLUTION
+
+int maxSubarray(vector<int>& nums) {
+    if (nums.size() == 0) {
+        return 0;
+    }
+ 
+    int maxSum = nums[0];
+    int currentSum = nums[0];
+ 
+    for (int i = 1; i < nums.size(); i++) {
+        currentSum = max(nums[i], currentSum + nums[i]);
+        maxSum = max(maxSum, currentSum);
+    }
+ 
+    return maxSum;
+}
+
+
+
+
+The maxSubarray function is intended to find the contiguous subarray (at least one number) which has the largest sum and return its sum. This is a classic problem known as the Maximum Subarray Problem, and the approach used in the provided function is called Kadane's Algorithm, which is known for its efficiency.
+
+
+
+1. Function Signature:
+
+int maxSubarray(vector<int>& nums)
+The function, named maxSubarray, returns an integer value. It accepts:
+
+vector<int>& nums: A reference to a vector of integers which represents the list of numbers for which we need to find the maximum sum of a contiguous subarray.
+
+
+
+2. Handling Edge Case:
+
+if (nums.size() == 0) {
+    return 0;
+}
+This checks if the given list is empty. If it is, the function immediately returns 0, indicating no possible sum.
+
+
+
+3. Initializing Sum Variables:
+
+int maxSum = nums[0];
+int currentSum = nums[0];
+maxSum: This keeps track of the maximum subarray sum we've found so far. Initialized to the first element in the vector.
+
+currentSum: This variable keeps track of the current subarray sum as we iterate through the list. It's also initialized to the first element.
+
+
+
+4. Iterating through the List:
+
+for (int i = 1; i < nums.size(); i++)
+The loop starts from the second element (since we've already considered the first element in our initializations) and goes till the end of the vector.
+
+
+
+5. Updating currentSum:
+
+currentSum = max(nums[i], currentSum + nums[i]);
+For each element, there are two possibilities:
+
+Start a new subarray from the current element (nums[i]).
+
+Extend the previous subarray by including the current element (currentSum + nums[i]).
+
+The max function picks the larger value between the two, effectively deciding whether it's more beneficial to start a new subarray or continue the existing one.
+
+
+
+6. Updating maxSum:
+
+maxSum = max(maxSum, currentSum);
+After updating currentSum for the current element, we then check if the new currentSum is greater than our stored maxSum (the largest sum we've found so far). If it is, we update maxSum.
+
+
+
+7. Returning the Result:
+
+return maxSum;
+After examining all elements in the list, the maxSum variable will contain the sum of the subarray with the largest possible sum. We return this value.
+
+
+
+In Summary: The maxSubarray function determines the sum of the contiguous subarray with the highest sum in the input list using Kadane's algorithm. As it moves through the list, it continuously determines, for each element, whether it's better to start a new subarray or extend the existing one. By doing so, it efficiently computes the desired result without needing to examine every possible subarray explicitly.
+
+
+
+
+
+Code with inline comments:
+
+
+
+/**
+ * Finds the contiguous subarray (at least one number) which has the largest sum.
+ *
+ * @param nums: A reference to the vector containing the input numbers.
+ * @return: The sum of the contiguous subarray with the largest sum.
+ */
+int maxSubarray(vector<int>& nums) {
+    
+    // If the vector is empty, there's no subarray to consider, so return a sum of 0.
+    if (nums.size() == 0) {
+        return 0;
+    }
+ 
+    // Initialize 'maxSum' with the value of the first element. 
+    // This will store the maximum sum we've found so far.
+    int maxSum = nums[0];
+ 
+    // Initialize 'currentSum' with the value of the first element.
+    // This will store the current running total as we explore subarrays.
+    int currentSum = nums[0];
+ 
+    // Loop through the vector starting from the second element.
+    for (int i = 1; i < nums.size(); i++) {
+        
+        // Update 'currentSum'. The idea here is to decide whether to
+        // start a new subarray (just take nums[i]) or extend the 
+        // current subarray (add nums[i] to the existing currentSum).
+        currentSum = max(nums[i], currentSum + nums[i]);
+ 
+        // Update 'maxSum' with the larger of the current 'maxSum' 
+        // and the new 'currentSum'. This ensures 'maxSum' always 
+        // holds the largest sum we've found.
+        maxSum = max(maxSum, currentSum);
+    }
+ 
+    // Return the maximum sum found.
+    return maxSum;
+}

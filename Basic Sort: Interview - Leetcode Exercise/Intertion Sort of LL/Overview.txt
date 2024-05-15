@@ -1,0 +1,265 @@
+#INTRODUCTION 
+
+Selection Sort of LL ( ** Interview Question)
+Your task is to implement the selectionSort() method to sort a singly linked list using the Selection Sort algorithm. The goal is to sort the linked list in ascending order, but you can only change the value fields of the existing nodes.
+
+Method Signature:
+
+void selectionSort();
+
+
+
+Constraints:
+
+Do not create new nodes; you should only change the value fields of existing nodes.
+
+Algorithm Outline:
+
+If the list has less than two elements, it's already sorted. Exit the function.
+
+Set a Node* current to point at the head of the list.
+
+Loop through the list, finding the smallest element in the remaining part of the list.
+
+If you find a smaller element, swap its value with the value in current.
+
+Move current to the next node and repeat steps 3-4 until the end of the list is reached.
+
+
+
+Example:
+
+Suppose your linked list contains the following elements:
+
+5 -> 2 -> 9 -> 1 -> 5 -> 6
+
+After performing selectionSort(), the linked list should look like this:
+
+1 -> 2 -> 5 -> 5 -> 6 -> 9
+
+
+
+Tips:
+
+Take time to understand how the Selection Sort algorithm works on arrays. The concept will be similar for linked lists.
+
+Drawing diagrams to visualize the linked list before and after sorting can be very helpful.
+
+Make sure to test your code thoroughly using various scenarios, like empty lists, lists with one element, and lists with many elements.
+
+
+#HINT
+
+Pseudo Code:
+
+
+
+Check if List is Already Sorted
+
+If the list has less than 2 elements, it's already sorted, so exit the function.
+
+Initialize 'Current' Node
+
+Start at the head of the list.
+
+Begin Outer Loop
+
+Loop while the 'current' node's next is not nullptr.
+
+Initialize 'Smallest' Node
+
+Start by assuming the 'current' node holds the smallest value.
+
+Initialize 'Inner Current' Node
+
+Start at the node next to 'current'.
+
+Begin Inner Loop
+
+Loop while the 'inner current' node is not nullptr.
+
+Find the Smallest Value
+
+If the value at 'inner current' is smaller than the value at 'smallest':
+
+Update 'smallest' to be 'inner current'.
+
+Move 'Inner Current' Node
+
+Go to the next node in the list.
+
+End of Inner Loop
+
+Check If Swap is Needed
+
+If 'smallest' is not equal to 'current':
+
+Swap the Values
+
+Swap the values of 'smallest' and 'current' nodes.
+
+Move 'Current' Node
+
+Go to the next node in the list.
+
+End of Outer Loop
+
+
+#SOLUTION
+
+        void selectionSort() {
+            if (length < 2) return;
+        
+            Node* current = head;
+            while (current->next != nullptr) {
+                Node* smallest = current;
+                Node* innerCurrent = current->next;
+        
+                while (innerCurrent != nullptr) {
+                    if (innerCurrent->value < smallest->value) {
+                        smallest = innerCurrent;
+                    }
+                    innerCurrent = innerCurrent->next;
+                }
+        
+                if (smallest != current) {
+                    int temp = current->value;
+                    current->value = smallest->value;
+                    smallest->value = temp;
+                }
+                
+                current = current->next;
+            }
+        }
+
+
+
+
+Let's go through the selectionSort function for a linked list step by step.
+
+This function sorts a linked list using the Selection Sort algorithm. The basic idea is to find the smallest (or largest) element and place it at the beginning (or end) of the list, then continue doing so for the remaining elements.
+
+
+
+Code Breakdown:
+
+
+
+Check List Length
+
+if (length < 2) return;
+Checks if the linked list has fewer than 2 elements.
+
+If yes, it returns because the list is already sorted.
+
+Initialize current
+
+Node* current = head;
+current is set to point to the head of the list.
+
+We'll use current to go through the list in the outer loop.
+
+Outer While Loop
+
+while (current->next != nullptr) {
+This loop iterates through the list.
+
+It will stop if the next node of current is nullptr.
+
+Initialize smallest and innerCurrent
+
+Node* smallest = current;
+Node* innerCurrent = current->next;
+smallest is initially set to current.
+
+innerCurrent starts at the node right after current.
+
+Inner While Loop
+
+while (innerCurrent != nullptr) {
+This loop goes through the remaining elements in the list.
+
+It searches for the smallest value in this subset.
+
+Find Smallest Node
+
+if (innerCurrent->value < smallest->value) {
+    smallest = innerCurrent;
+}
+Checks if the value of innerCurrent is smaller than that of smallest.
+
+If yes, smallest is updated to point to innerCurrent.
+
+Move innerCurrent
+
+innerCurrent = innerCurrent->next;
+Moves innerCurrent to the next node for the next iteration.
+
+End of Inner Loop
+
+}
+The inner loop ends after going through all remaining elements.
+
+Swap if Necessary
+
+if (smallest != current) {
+    int temp = current->value;
+    current->value = smallest->value;
+    smallest->value = temp;
+}
+Checks if smallest and current are different.
+
+If yes, it swaps their values.
+
+Move current
+
+current = current->next;
+Moves current to the next node for the next outer loop iteration.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void selectionSort() {
+    // If the list has fewer than 2 elements, it's already sorted.
+    // So, we exit the function early.
+    if (length < 2) return;
+    
+    // "current" starts at the head. We'll use it to traverse the list.
+    Node* current = head;
+    
+    // Continue sorting until "current->next" becomes nullptr, 
+    // indicating the end of the list.
+    while (current->next != nullptr) {
+        // Assume the "smallest" value is at "current" for now.
+        Node* smallest = current;
+        
+        // "innerCurrent" starts at the node next to "current".
+        // We use it to find the smallest node in the remaining list.
+        Node* innerCurrent = current->next;
+        
+        // Traverse the unsorted part of the list to find the smallest value.
+        while (innerCurrent != nullptr) {
+            // If we find a smaller value, update "smallest" to point to it.
+            if (innerCurrent->value < smallest->value) {
+                smallest = innerCurrent;
+            }
+            // Move "innerCurrent" to the next node.
+            innerCurrent = innerCurrent->next;
+        }
+        
+        // If "smallest" is not "current", swap their values.
+        if (smallest != current) {
+            int temp = current->value;
+            current->value = smallest->value;
+            smallest->value = temp;
+        }
+        
+        // Move "current" to the next node and continue sorting.
+        current = current->next;
+    }
+}

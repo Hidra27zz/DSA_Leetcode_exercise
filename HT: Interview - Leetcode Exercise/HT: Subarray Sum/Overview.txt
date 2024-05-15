@@ -1,0 +1,178 @@
+#INTRODUCTION 
+
+HT: Subarray Sum ( ** Interview Question)
+Implement a function called subarraySum() that finds a continuous subarray within a given vector of integers that adds up to a specific target number.
+
+
+
+Input:
+The function takes the following inputs:
+
+A constant reference to a vector of integers nums.
+
+An integer target.
+
+
+
+Output:
+The function should return a vector of two integers representing the start and end indices (inclusive) of the continuous subarray in the input vector nums that adds up to the target value. If no such subarray exists, the function should return an empty vector.
+
+
+
+Examples:
+
+Consider the following input vector and target:
+
+nums: {1, 2, 3, 4, 5}
+target: 9
+After calling subarraySum(nums, target), the result should be:
+
+{1, 3}
+
+
+
+
+Consider the following input vector and target:
+
+nums: {1, 2, 3, 7, 5}
+target: 12
+After calling subarraySum(nums, target), the result should be:
+
+{1, 3}
+
+
+
+
+Consider the following input vector and target:
+
+nums: {-1, 4, 2, 7, 1}
+target: 13
+After calling subarraySum(nums, target), the result should be:
+
+{1, 3}
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called numMap
+
+For each index i in the input vector nums
+
+For i = 0 to nums.size() - 1
+
+Calculate the complement of the current number as target - nums[i]
+
+Check if the complement exists in numMap i. If it exists
+
+Return the pair {numMap[complement], i} c. Add the current number nums[i] and its index i to numMap
+
+If no pair is found, return an empty vector
+
+#SOLUTION
+
+vector<int> subarraySum(const vector<int>& nums, int target) {
+    unordered_map<int, int> sumIndex;
+    sumIndex[0] = -1;
+    int currentSum = 0;
+ 
+    for (int i = 0; i < nums.size(); i++) {
+        currentSum += nums[i];
+        if (sumIndex.find(currentSum - target) != sumIndex.end()) {
+            return {sumIndex[currentSum - target] + 1, i};
+        }
+        sumIndex[currentSum] = i;
+    }
+ 
+    return {};
+}
+
+
+
+
+The subarraySum function takes a constant reference to a vector of integers named nums and an integer named target as its inputs.
+
+The function returns a vector containing the start and end indices of the first subarray in nums that adds up to the target.
+
+Here's a step-by-step explanation of the code:
+
+
+
+unordered_map<int, int> sumIndex;
+
+An unordered_map named sumIndex is created. It has integers as keys and integers as values. This map will be used to store the indices of the cumulative sums found in the nums vector.
+
+sumIndex[0] = -1;
+
+The initial key-value pair (0, -1) is added to the sumIndex map. This represents the starting point of the cumulative sum.
+
+int currentSum = 0;
+
+An integer named currentSum is initialized to 0. This variable will store the cumulative sum as the nums vector is traversed.
+
+for (int i = 0; i < nums.size(); i++) { ... }
+
+This for loop iterates over the indices (i) of the nums vector.
+
+currentSum += nums[i];
+
+Inside the for loop, the value of the current number is added to the currentSum.
+
+if (sumIndex.find(currentSum - target) != sumIndex.end()) { ... }
+
+An if statement checks if the difference between the currentSum and the target is present as a key in the sumIndex map.
+
+return {sumIndex[currentSum - target] + 1, i};
+
+If the if statement's condition is true, it means that a subarray with the sum equal to the target has been found. The function returns a vector containing the start index (one more than the index associated with the key currentSum - target) and the end index (i) of the subarray.
+
+sumIndex[currentSum] = i;
+
+If the if statement's condition is false, the currentSum and its index (i) are added to the sumIndex map.
+
+return {};
+
+After the for loop, if no subarray in the nums vector adds up to the target, the function returns an empty vector.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// Function to find a continuous subarray which adds up to target
+vector<int> subarraySum(const vector<int>& nums, int target) {
+    // Initialize an unordered map to store sum of elements up to an index
+    unordered_map<int, int> sumIndex;
+ 
+    // Initialize 0 sum at index -1
+    sumIndex[0] = -1;
+ 
+    // Initialize currentSum to 0
+    int currentSum = 0;
+ 
+    // Iterate through nums array
+    for (int i = 0; i < nums.size(); i++) {
+        // Accumulate sum
+        currentSum += nums[i];
+ 
+        // 'find' function is used to search 'currentSum - target' in the map
+        // 'end' function gives an iterator pointing to past-the-end element
+        // If 'currentSum - target' is not found in map, 'find' returns 'end'
+        // So, if 'find' does not return 'end', it means 'currentSum - target'
+        // exists in the map, which implies a subarray with sum equals to
+        // 'target' has been found
+        if (sumIndex.find(currentSum - target) != sumIndex.end()) {
+            // Return the indices of subarray which adds up to target
+            return {sumIndex[currentSum - target] + 1, i};
+        }
+ 
+        // Record the current sum and its index in the map
+        sumIndex[currentSum] = i;
+    }
+ 
+    // If no such subarray is found, return an empty vector
+    return {};
+}

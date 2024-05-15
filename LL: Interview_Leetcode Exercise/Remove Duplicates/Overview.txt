@@ -1,0 +1,281 @@
+#INTRODUCTION 
+
+LL: Remove Duplicates ( ** Interview Question)
+Implement the removeDuplicates member function for the LinkedList class, which removes all duplicate values from a singly linked list.
+
+The function should preserve the original order of the non-duplicate elements.
+
+Note:  This linked list class does NOT have a tail which will make this method easier to implement.
+
+
+
+Function Signature:
+
+void removeDuplicates()
+
+
+
+Example:
+
+Consider the following singly linked list:
+
+1 -> 2 -> 3 -> 2 -> 4 -> 5 -> 3 -> nullptr
+
+
+
+For the given list, after calling the function ll.removeDuplicates(), the list should be modified to be:
+
+1 -> 2 -> 3 -> 4 -> 5 -> nullptr
+
+
+
+All duplicate values have been removed, and the remaining elements maintain their original order.
+
+
+
+
+
+To assist you in the implementation and troubleshooting, a test suite has been provided in the Test.cpp file. This file contains a series of tests that validate the functionality of your code and will output to the "User logs" tab.
+
+You can also edit the Test.cpp file if you would like to create your own tests.
+
+
+
+#HINT
+
+Pseudo Code (for solution that uses a Set):
+
+Create an unordered set called values to store unique values of nodes.
+
+Initialize two pointers, previous and current, to nullptr and the head of the linked list, respectively.
+
+Iterate through the linked list using the current pointer:
+
+If the value of the current node is already in the set (values), update the next pointer of the previous node to point to the next node of the current node (thus skipping the current node) and decrement the length of the linked list by 1.
+
+If the value of the current node is not in the set, insert the value into the set (values) and set previous to the current node.
+
+Move the current pointer to the next node in the linked list.
+
+
+
+
+
+Pseudo Code (for solution that does not use a Set):
+
+Initialize a pointer current to the head of the linked list.
+
+Iterate through the linked list using the current pointer:
+
+Initialize a pointer runner to current.
+
+While the next node of runner is not nullptr, perform the following:
+
+If the value of the next node of runner is equal to the value of the current node, update the next pointer of the runner node to point to the next node of the runner's next node (thus skipping the duplicate node) and decrement the length of the linked list by 1.
+
+If the value of the next node of runner is not equal to the value of the current node, move the runner pointer to the next node in the linked list.
+
+Move the current pointer to the next node in the linked list, and repeat step 2 until the end of the linked list is reached.
+
+#SOLUTION
+
+Solution that uses a Set:
+
+        void removeDuplicates() {
+            unordered_set<int> values;
+            Node* previous = nullptr;
+            Node* current = head;
+            while (current != nullptr) {
+                if (values.find(current->value) != values.end()) {
+                    previous->next = current->next;
+                    delete current;
+                    current = previous->next;
+                    length -= 1;
+                } else {
+                    values.insert(current->value);
+                    previous = current;
+                    current = current->next;
+                }
+            }
+        }
+
+
+
+
+Function Overview
+
+The function removeDuplicates() is part of a LinkedList class. Its purpose is to remove any duplicate values within the linked list so that each value appears only once.
+
+Creating an Unordered Set
+
+unordered_set<int> values; is the first line within the function. An unordered set named values is created to store unique integer values from the linked list. Since sets in C++ do not allow duplicate values, this will be useful for checking duplicates in the linked list.
+
+Initializing Pointers
+
+Node* previous = nullptr; and Node* current = head; are the next two lines. Two pointers to Node objects are created, named previous and current.
+
+The previous pointer is initialized to nullptr and will be used to keep track of the node immediately before the current node during iteration.
+
+The current pointer is initialized to the head of the linked list and will be used to traverse the list.
+
+While Loop
+
+while (current != nullptr) {...} is a while loop that will iterate through each node in the linked list until the current pointer reaches nullptr, signaling the end of the list.
+
+Inside the Loop
+
+Two paths are possible inside the loop, depending on whether the current node's value is already present in the values set.
+
+If Node Value is Found in the Set
+
+If values.find(current->value) != values.end(), this checks if the current node's value is already in the values set.
+
+If it is, the following steps are taken:
+
+previous->next = current->next; The previous node's next pointer is updated to point to the node after the current node, bypassing the current node and effectively removing it from the list.
+
+delete current; The current node's memory is deallocated, fully removing it.
+
+current = previous->next; The current pointer is updated to the next node.
+
+length -= 1; The length of the linked list is reduced by 1 to account for the removed node.
+
+If Node Value is Not Found in the Set
+
+If the value of the current node is not found in the values set, the else branch executes the following steps:
+
+values.insert(current->value); The value of the current node is inserted into the values set.
+
+previous = current; The previous pointer is updated to point to the current node.
+
+current = current->next; The current pointer is updated to point to the next node in the linked list, moving the iteration forward.
+
+In conclusion, the function iteratively checks each node in the list, removes it if it's a duplicate, and continues to the next node. When it reaches the end of the list (nullptr), all duplicates have been removed.
+
+
+
+
+
+Code with inline comments (for solution that uses a set):
+
+
+
+void removeDuplicates() {
+    unordered_set<int> values; // Stores unique list values
+    Node* previous = nullptr; // Points to previous node
+    Node* current = head; // Starts at head of list
+ 
+    // Traverse list until end (nullptr)
+    while (current != nullptr) {
+        
+        // If value exists in set
+        if (values.find(current->value) != values.end()) {
+            
+            // Bypass current node
+            previous->next = current->next;
+            
+            // Delete current node
+            delete current;
+            
+            // Move to next node
+            current = previous->next;
+            
+            // Decrement list length
+            length -= 1;
+        } else {
+            // Insert value in set
+            values.insert(current->value);
+            
+            // Update previous to current node
+            previous = current;
+            
+            // Move to next node
+            current = current->next;
+        }
+    }
+}
+
+
+
+
+
+
+Solution that does not use a Set:
+
+
+
+        void removeDuplicates() {
+            Node* current = head;
+            while (current != nullptr) {
+                Node* runner = current;
+                while (runner->next != nullptr) {
+                    if (runner->next->value == current->value) {
+                        Node* temp = runner->next;
+                        runner->next = runner->next->next;
+                        delete temp;
+                        length -= 1;
+                    } else {
+                        runner = runner->next;
+                    }
+                }
+                current = current->next;
+            }
+        }
+
+
+
+
+Here's a step-by-step explanation of the code that does not use a Set:
+
+
+
+Node* current = head;: This line initializes a pointer current to the head of the linked list.
+
+while (current != nullptr) {...}: This loop iterates over the entire linked list, stopping when it reaches a node that is nullptr, indicating the end of the list.
+
+Node* runner = current;: Inside the outer loop, runner is initialized to the same node as current.
+
+while (runner->next != nullptr) {...}: This inner loop iterates over the remaining nodes in the list.
+
+if (runner->next->value == current->value) {...}: This if condition checks if the value of the next node is the same as the value of the current node. If it is, the next node is a duplicate and the code inside the if statement will execute.
+
+5.1. Node* temp = runner->next;: This line creates a temporary pointer to the next node (runner->next), which is the duplicate node that is to be removed.
+
+5.2. runner->next = runner->next->next;: The next pointer of the runner node is updated to point to the node after its next node, effectively removing runner->next from the list.
+
+5.3. delete temp;: The temp node (which is the original runner->next node) is deleted, freeing up its memory.
+
+5.4. length -= 1;: The length of the linked list is reduced by one to reflect the removal of the node.
+
+else {...}: If the next node's value is not the same as the current node's value, the runner pointer is moved to the next node in the list.
+
+current = current->next;: After the inner loop has checked all subsequent nodes for duplicates of current, current is moved to the next node in the list, and the process repeats until all nodes have been checked.
+
+
+
+
+
+Code with inline comments (for solution that does not use a set):
+
+
+
+void removeDuplicates() {
+    Node* current = head; // Start at the head of the list
+    while (current != nullptr) { // Iterate through the list
+        Node* runner = current; // Secondary iterator
+        // Check all subsequent nodes
+        while (runner->next != nullptr) { 
+            // If a duplicate is found
+            if (runner->next->value == current->value) {
+                Node* temp = runner->next; // Temp node for deletion
+                // Bypass the node to be deleted
+                runner->next = runner->next->next;
+                delete temp; // Delete the node
+                length -= 1; // Decrement length
+            } else {
+                runner = runner->next; // Move to next node
+            }
+        }
+        current = current->next; // Move to next node
+    }
+}

@@ -1,0 +1,296 @@
+#INTRODUCTION 
+
+Set: Find Pairs ( ** Interview Question)
+Write a function called findPairs.
+
+This function takes two lists of numbers and a target number.
+
+It then finds pairs of numbers where one number is from the first list and the other is from the second list, and their sum equals the target number.
+
+The function returns these pairs.
+
+
+
+What Do We Mean by "Pairs"?
+
+Pairs are sets of two numbers. For example, if we have 4 in one list and 6 in another, and our target number is 10, then (4, 6) is a pair that adds up to 10.
+
+
+
+What Do You Need to Do?
+
+Receive Two Lists and a Target: The function takes two lists of numbers and a target number as input.
+
+Go Through Each Number in First List: It goes through each number in the first list and remembers them.
+
+Go Through Each Number in Second List: Then, it looks at each number in the second list.
+
+Find Matching Pairs: For each number in the second list, the function checks if there is a number in the first list that, when added to it, equals the target number.
+
+Store the Pairs: If such a pair is found, the function stores it.
+
+Return the Pairs: Finally, the function returns all the pairs it found.
+
+
+
+Input
+
+A list of numbers stored in a vector called arr1.
+
+Another list of numbers stored in a vector called arr2.
+
+A target number called target.
+
+
+
+Output
+
+A list of pairs that add up to the target number. Each pair contains one number from arr1 and one number from arr2.
+
+
+
+Example
+
+Input Lists and Target
+
+First List: [1, 2, 3]
+
+Second List: [4, 5, 6]
+
+Target: 8
+
+Output Pairs
+
+[(2, 6), (3, 5)]
+
+Why?
+
+In this example, the pairs (2, 6) and (3, 5) are the only pairs where one number is from the first list and the other is from the second list, and they add up to 8.
+
+
+#HINT
+
+Pseudo Code:
+
+
+
+Objective
+
+The function aims to find all unique pairs of numbers from two lists (arr1 and arr2) that add up to a given target number.
+
+
+
+Pseudo Code Outline
+
+Function Signature
+
+Define a function named findPairs that takes two lists of integers arr1 and arr2, and an integer target. It returns a list of integer pairs.
+
+Create an Empty Set for Storing Numbers from arr1
+
+Create an empty unordered set named mySet to store unique numbers from arr1.
+
+Populate mySet with Numbers from arr1
+
+Loop through arr1 and insert each number into mySet.
+
+Initialize an Empty List for Storing Pairs
+
+Create an empty list named pairs to store the pairs of numbers that add up to target.
+
+Find Pairs
+
+Loop through each number in arr2.
+
+For each number, find its complement by subtracting it from target.
+
+If the complement exists in mySet, add the pair to the pairs list.
+
+Return the List of Pairs
+
+Return the pairs list containing all the pairs that add up to target.
+
+
+
+Detailed Steps
+
+Step 1: Function Signature
+
+function findPairs(arr1: list of int, arr2: list of int, target: int): returns list of int pairs
+
+Step 2: Create an Empty Set for Storing Numbers from arr1
+
+mySet = empty unordered set of int
+
+Step 3: Populate mySet with Numbers from arr1
+
+for each number num in arr1 do
+
+insert num into mySet
+
+end for
+
+Step 4: Initialize an Empty List for Storing Pairs
+
+pairs = empty list of int pairs
+
+Step 5: Find Pairs
+
+for each number num in arr2 do
+
+complement = target - num
+
+if complement exists in mySet then
+
+add pair (complement, num) to pairs
+
+end if
+
+end for
+
+Step 6: Return the List of Pairs
+
+return pairs
+
+
+
+By following this pseudo code, you will create a function that finds and returns all the unique pairs from arr1 and arr2 that add up to the target number.
+
+#SOLUTION
+
+vector<vector<int>> findPairs(const vector<int>& arr1, const vector<int>& arr2, int target) {
+    unordered_set<int> mySet;
+    vector<vector<int>> pairs;
+ 
+    for (int num : arr1) {
+        mySet.insert(num);
+    }
+ 
+    for (int num : arr2) {
+        int complement = target - num;
+        if (mySet.find(complement) != mySet.end()) {
+            pairs.push_back({complement, num});
+        }
+    }
+ 
+    return pairs;
+}
+
+
+
+
+Overview:
+
+This code is a function called findPairs. It takes two lists of numbers (arr1 and arr2) and another number (target). The function finds all pairs of numbers where one number is from arr1 and the other is from arr2, and their sum is equal to target.
+
+
+
+Code Components:
+
+1. Function Header:
+
+vector<vector<int>> findPairs(const vector<int>& arr1, const vector<int>& arr2, int target)
+
+The function is named findPairs.
+
+It takes three arguments: two vectors of integers (arr1 and arr2) and a single integer (target).
+
+It returns a list of pairs (as a vector of vectors).
+
+2. Create an Empty Set:
+
+unordered_set<int> mySet;
+
+Here, we create an empty set called mySet. This set will help us track the numbers from arr1.
+
+3. Create an Empty List of Pairs:
+
+vector<vector<int>> pairs;
+
+We create an empty list called pairs to store the pairs of numbers that add up to target.
+
+4. Populate the Set with Numbers from arr1:
+
+for (int num : arr1) { mySet.insert(num); }
+
+This loop goes through each number in arr1 and adds it to mySet.
+
+5. Loop Through arr2 and Find Pairs:
+
+for (int num : arr2) { ... }
+
+This loop goes through each number in arr2.
+
+Inside the loop, it calculates the complement of num by subtracting it from target.
+
+int complement = target - num;
+
+Then, it checks if this complement exists in mySet.
+
+if (mySet.find(complement) != mySet.end()) { ... }
+
+If yes, it adds a pair [complement, num] to pairs.
+
+6. Return the List of Pairs:
+
+return pairs;
+
+The function returns the list of pairs that sum up to target.
+
+
+
+Step-By-Step:
+
+Function Starts: You call the function with two lists of numbers (arr1 and arr2) and a target number.
+
+Make Empty Sets and Lists: The function creates an empty set mySet and an empty list pairs.
+
+Fill the Set: The function fills mySet with numbers from arr1.
+
+Look for Pairs: The function goes through each number in arr2 and looks for its complement in mySet.
+
+If the complement is found, the pair [complement, num] is added to pairs.
+
+Return Pairs: The function returns the list of pairs that sum up to target.
+
+
+
+
+
+Code with inline comments:
+
+// Function named 'findPairs' takes two vectors of integers, 'arr1' and 'arr2',
+// and an integer 'target'. The function returns all pairs of integers where one
+// integer is from 'arr1' and the other is from 'arr2', and their sum equals 'target'.
+vector<vector<int>> findPairs(const vector<int>& arr1, const vector<int>& arr2, int target) {
+  
+  // Create an empty set named 'mySet' to store unique numbers from 'arr1'.
+  unordered_set<int> mySet;
+  
+  // Create a 2D vector named 'pairs' to store the result pairs.
+  vector<vector<int>> pairs;
+  
+  // Loop through each number 'num' in 'arr1'.
+  for (int num : arr1) {
+    
+    // Add 'num' to 'mySet'.
+    mySet.insert(num);
+  }
+  
+  // Loop through each number 'num' in 'arr2'.
+  for (int num : arr2) {
+    
+    // Calculate the 'complement' as 'target - num'.
+    int complement = target - num;
+    
+    // Check if the 'complement' exists in 'mySet'.
+    if (mySet.find(complement) != mySet.end()) {
+      
+      // If it exists, add the pair [complement, num] to 'pairs'.
+      pairs.push_back({complement, num});
+    }
+  }
+  
+  // Return the 'pairs' vector as the result.
+  return pairs;
+}

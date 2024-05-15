@@ -1,0 +1,129 @@
+#INTRODUCTION
+
+Stack: Reverse String ( ** Interview Question)
+Implement a function called reverseString() that reverses the input string using a stack data structure.
+
+Input:
+The function takes a constant reference to a string str.
+
+
+
+Output:
+The function should return a new string that is the reverse of the input string str.
+
+
+
+Constraints:
+The input string may contain any printable ASCII characters.
+
+
+
+Examples:
+
+Consider the following input string:
+
+str: "hello"
+After calling reverseString(str), the result should be:
+
+"olleh"
+
+
+
+
+Consider the following input string:
+
+str: "Udemy"
+After calling reverseString(str), the result should be:
+
+"ymedU"
+
+#HINT
+
+Pseudo Code:
+
+Create a stack of characters called charStack
+
+Create an empty string called reversedString
+
+For each character in the input string
+
+Push the character onto charStack
+
+While charStack is not empty
+
+Add the top character of charStack to reversedString
+
+Pop the top character from charStack
+
+Return reversedString
+
+#SOLUTION
+
+string reverseString(const string& str) {
+    stack<char> charStack;
+    string reversedString;
+ 
+    for (char c : str) {
+        charStack.push(c);
+    }
+ 
+    while (!charStack.empty()) {
+        reversedString += charStack.top();
+        charStack.pop();
+    }
+ 
+    return reversedString;
+}
+
+
+
+
+The reverseString function takes a const string reference as its input and returns a reversed string. Here's a step-by-step explanation of the code:
+
+
+
+stack<char> charStack;
+
+A stack of characters named charStack is created. This stack will be used to store characters from the input string in reverse order.
+
+string reversedString;
+
+A string named reversedString is created to store the reversed string as it is constructed from the characters in charStack.
+
+for (char c : str) { ... }
+
+This range-based for loop iterates through each character c in the input string str.
+
+charStack.push(c);
+
+Inside the for loop, each character c is pushed onto the charStack.
+
+
+
+
+
+Code with inline comments:
+
+
+
+string reverseString(const string& str) {
+    // Stack to store characters of the input string
+    stack<char> charStack;
+ 
+    // Create an empty reversed string
+    string reversedString;
+ 
+    // Iterate through the input string and push each character onto the stack
+    for (char c : str) {
+        charStack.push(c);
+    }
+ 
+    // Pop characters from the stack and add them to the reversed string
+    while (!charStack.empty()) {
+        reversedString += charStack.top();
+        charStack.pop();
+    }
+ 
+    // Return the reversed string
+    return reversedString;
+}

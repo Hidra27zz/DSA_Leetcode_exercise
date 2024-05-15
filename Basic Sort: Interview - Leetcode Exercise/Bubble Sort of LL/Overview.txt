@@ -1,0 +1,248 @@
+#INTRODUCTION 
+
+Bubble Sort of LL ( ** Interview Question)
+In this exercise, you will implement the bubbleSort() method to sort a singly linked list using the Bubble Sort algorithm. The goal is to sort the linked list in ascending order without creating any new nodes. You will only rearrange the value fields of the existing nodes.
+
+Method Signature:
+
+void bubbleSort();
+
+
+
+Constraints:
+
+Do not create new nodes; only change the value fields of existing nodes.
+
+
+
+Algorithm Outline:
+
+If the list has less than two elements, it's already sorted. Exit the function.
+
+Loop through the list until it is sorted:
+
+Set a Node* current to point at the head of the list.
+
+Loop through the list from head up to the point where the list is already sorted.
+
+If the value in current is greater than the value in current->next, swap them.
+
+Move the 'sorted until' marker one node backward.
+
+
+
+Example:
+
+Suppose your linked list contains the following elements: 5 -> 2 -> 9 -> 1 -> 5 -> 6
+
+After performing bubbleSort(), the linked list should look like this: 1 -> 2 -> 5 -> 5 -> 6 -> 9
+
+
+
+Tips:
+
+Take time to understand how the Bubble Sort algorithm works on arrays. The concept will be similar for linked lists.
+
+Draw diagrams to visualize the linked list before and after sorting to help you understand the algorithm.
+
+Make sure to test your code thoroughly using various scenarios like empty lists, lists with one element, and lists with many elements.
+
+
+#HINT
+
+Pseudo Code:
+
+
+
+Check if List is Already Sorted
+
+If the list length is less than 2, exit the function.
+
+Initialize a 'Sorted Until' Marker
+
+Set a marker that will keep track of where the list is sorted until.
+
+Initialize this marker to nullptr.
+
+Start Outer Loop to Sort the List
+
+Loop until the 'sorted until' marker is the second node in the list.
+
+Initialize Current Node for Inner Loop
+
+Start at the head of the list.
+
+Start Inner Loop to Compare Adjacent Nodes
+
+Loop from the head to where the list is sorted until (as indicated by the 'sorted until' marker).
+
+Get the Next Node
+
+Store the next node relative to the current node.
+
+Compare Current and Next Node Values
+
+If the value of the current node is greater than that of the next node:
+
+Swap the Values
+
+Swap the values of the current node and the next node.
+
+Move to the Next Node in List
+
+Set the current node to its next node.
+
+End of Inner Loop
+
+Update 'Sorted Until' Marker
+
+Move the 'sorted until' marker back by one node.
+
+End of Outer Loop
+
+
+
+#SOLUTION
+
+
+        void bubbleSort() {
+            if (length < 2) return;
+        
+            Node* sortedUntil = nullptr;
+            while (sortedUntil != head->next) {
+                Node* current = head;
+                while (current->next != sortedUntil) {
+                    Node* nextNode = current->next;
+                    if (current->value > nextNode->value) {
+                        int temp = current->value;
+                        current->value = nextNode->value;
+                        nextNode->value = temp;
+                    }
+                    current = current->next;
+                }
+                sortedUntil = current;
+            }
+        }
+
+
+
+
+The bubbleSort function sorts a linked list using the bubble sort algorithm. This algorithm compares adjacent nodes and swaps them if they are in the wrong order.
+
+
+
+Code Breakdown:
+
+
+
+Check List Length
+
+if (length < 2) return;
+This line checks if the linked list has fewer than two elements.
+
+If yes, it returns immediately because a list with one or zero elements is already sorted.
+
+Initialize sortedUntil
+
+Node* sortedUntil = nullptr;
+This pointer is used to mark the node up to which the list is sorted.
+
+It starts as nullptr because no part of the list is sorted yet.
+
+Outer While Loop
+
+while (sortedUntil != head->next) {
+This loop continues as long as sortedUntil is not equal to the node right after the head.
+
+This condition ensures that the list is fully sorted.
+
+Initialize current
+
+Node* current = head;
+current is set to the head of the list.
+
+This pointer will move through the list during each iteration of the inner loop.
+
+Inner While Loop
+
+while (current->next != sortedUntil) {
+This loop goes through the list until it reaches the node marked by sortedUntil.
+
+It compares and swaps adjacent nodes if needed.
+
+Get nextNode
+
+Node* nextNode = current->next;
+nextNode is the node immediately following current.
+
+This makes it easy to compare and potentially swap values.
+
+Check and Swap
+
+if (current->value > nextNode->value) {
+    int temp = current->value;
+    current->value = nextNode->value;
+    nextNode->value = temp;
+}
+These lines check if the value in current is greater than the value in nextNode.
+
+If yes, it swaps the values using a temporary variable temp.
+
+Move current
+
+current = current->next;
+After potentially swapping, current moves to the next node.
+
+This prepares for the next iteration of the inner loop.
+
+Update sortedUntil
+
+sortedUntil = current;
+After the inner loop finishes, sortedUntil is updated to where current is now.
+
+This marks the node up to which the list is now sorted.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void bubbleSort() {
+    // If the list has fewer than 2 elements, it's already sorted.
+    // So, we exit the function early.
+    if (length < 2) return;
+ 
+    // Initialize a pointer called "sortedUntil".
+    // This pointer marks the point until which the list is sorted.
+    Node* sortedUntil = nullptr;
+ 
+    // Continue sorting until "sortedUntil" reaches the second node in the list.
+    while (sortedUntil != head->next) {
+        // Initialize "current" at the head of the list. 
+        // "current" will be used to traverse the list.
+        Node* current = head;
+ 
+        // Traverse the list until "current->next" becomes "sortedUntil".
+        // This means we only check the unsorted part of the list.
+        while (current->next != sortedUntil) {
+            // "nextNode" points to the node immediately after "current".
+            Node* nextNode = current->next;
+ 
+            // Compare the value of "current" and "nextNode".
+            // If they're out of order, swap them.
+            if (current->value > nextNode->value) {
+                int temp = current->value;
+                current->value = nextNode->value;
+                nextNode->value = temp;
+            }
+            // Move "current" to the next node.
+            current = current->next;
+        }
+        // Update "sortedUntil" to point to the last node we've just checked.
+        // This way, "sortedUntil" moves closer to the head of the list.
+        sortedUntil = current;
+    }
+}

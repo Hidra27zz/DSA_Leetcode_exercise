@@ -1,0 +1,291 @@
+#INTRODUCTIONS
+
+Vector: Rotate ( ** Interview Question)
+Title: Rotating an Array
+
+Introduction: Array manipulation is a common operation in data processing. One of the operations is rotating the elements of an array. In this problem, the task is to rotate an array to the right by a given number of steps. A rotation on the array means that each element moves to the right, and the last element wraps around to become the first.
+
+Objective: Given a list of integers, nums, and an integer, k, rotate the elements of nums to the right by k steps.
+
+Detailed Requirements:
+
+Input:
+
+A list of integers, nums, which can be of any length, including being empty.
+
+An integer, k, representing the number of steps to rotate the nums to the right.
+
+Output:
+
+There's no direct output from the function. Instead, the input list, nums, is modified in-place to reflect its rotated state.
+
+Examples:
+
+Example 1:
+
+Input:
+
+nums: [1,2,3,4,5,6,7], k: 3
+
+Modified nums:
+
+[5,6,7,1,2,3,4]
+
+Explanation:
+
+Rotate the array 3 times. After the first rotation, the array becomes [7,1,2,3,4,5,6]
+
+Second rotation:  [6,7,1,2,3,4,5]
+
+Third rotation:  [5,6,7,1,2,3,4]
+
+Example 2:
+
+Input:
+
+nums: [-1,-100,3,99], k: 2
+
+Modified nums:
+
+[3,99,-1,-100]
+
+Explanation:
+
+Rotate the array 2 times to achieve the resultant array.
+
+Example 3:
+
+Input:
+
+nums: [1,2,3], k: 4
+
+Modified nums:
+
+[3,1,2]
+
+Explanation:
+
+Rotate the array 4 times. The effect of rotating the array 3 times is the same as not rotating it at all. Hence, rotating it 4 times is equivalent to rotating it once.
+
+
+
+Tips:
+
+If the number of rotations, k, is larger than the length of the array, we can use the modulo operation to reduce the effective number of rotations.
+
+One efficient way to rotate an array is to use reversing. By reversing specific portions of the array in a certain order, we can achieve the desired rotation without having to move each element individually.
+
+
+
+The problem evaluates the ability to perform array manipulations efficiently and understand the properties and patterns of the array rotation operation.
+
+
+
+#HINT
+
+Pseudo Code:
+
+Objective: To rotate an array nums to the right by k steps, where each step moves the last element to the beginning of the array, and all other elements move one step to the right.
+
+Procedure:
+
+Check If Array Is Empty:
+
+If the nums array is empty: a. Exit the function immediately, as there's nothing to rotate.
+
+Normalize Rotation Steps:
+
+Set k to be k % nums.size(). This ensures that if k is greater than the size of the array, we only rotate the necessary amount. For example, rotating an array of size 5 by 7 steps is the same as rotating it by 2 steps.
+
+Reverse the First Part of the Array:
+
+Set two pointers: start at the beginning of the array and end at the position of nums.size() - k - 1.
+
+Using a loop: a. Swap the values of nums[start] and nums[end]. b. Increment the start pointer and decrement the end pointer. c. Continue until start is less than end.
+
+This step effectively reverses the portion of the array before the rotation point.
+
+Reverse the Second Part of the Array:
+
+Reset the start pointer to the position of nums.size() - k and the end pointer to the last element of the array.
+
+Using a loop: a. Swap the values of nums[start] and nums[end]. b. Increment the start pointer and decrement the end pointer. c. Continue until start is less than end.
+
+This step reverses the portion of the array after the rotation point.
+
+Reverse the Entire Array:
+
+Reset the start pointer to the beginning of the array and the end pointer to the last element.
+
+Using a loop: a. Swap the values of nums[start] and nums[end]. b. Increment the start pointer and decrement the end pointer. c. Continue until start is less than end.
+
+This step will give the final rotated array as desired.
+
+
+
+Note: This function employs the "reverse sections then reverse the whole" strategy for array rotation. By first reversing the sections before and after the desired rotation point and then reversing the entire array, we achieve the rotation effect without the need to use extra space or perform multiple shifts.
+
+
+
+#SOLUTION
+
+void rotate(vector<int>& nums, int k) {
+    if (nums.empty()) return;
+    
+    k = k % nums.size();
+ 
+    // Reverse the first part
+    for (int start = 0, end = nums.size() - k - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+ 
+    // Reverse the second part
+    for (int start = nums.size() - k, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+ 
+    // Reverse the whole array
+    for (int start = 0, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+}
+
+
+
+
+The rotate function modifies a given vector (nums) to rotate its elements to the right by k steps. If you imagine the vector as a loop, the elements that get shifted off the right end will wrap around and reappear at the left end. This function achieves the rotation using a clever three-step reversal technique.
+
+
+
+1. Function Signature:
+
+void rotate(vector<int>& nums, int k)
+This function, named rotate, returns no value (void). It accepts two parameters:
+
+vector<int>& nums: A reference to a vector of integers, which means changes inside the function will reflect in the original list outside.
+
+int k: The number of steps by which elements in the vector should be rotated to the right.
+
+
+
+2. Check for Empty Vector:
+
+if (nums.empty()) return;
+This is a quick check to exit the function if the vector is empty. If it is, no action is needed.
+
+
+
+3. Adjusting the Value of k:
+
+k = k % nums.size();
+If k is larger than the length of the vector, rotating the vector by its length (or any multiple of its length) doesn't change the vector. So, by taking the modulo, we effectively get the minimum number of rotations needed to achieve the desired effect.
+
+
+
+4. Reversing the First Part:
+
+for (int start = 0, end = nums.size() - k - 1; start < end; start++, end--) {
+    int temp = nums[start];
+    nums[start] = nums[end];
+    nums[end] = temp;
+}
+This loop reverses the first part of the vector, from the beginning up to nums.size() - k - 1.
+
+
+
+5. Reversing the Second Part:
+
+for (int start = nums.size() - k, end = nums.size() - 1; start < end; start++, end--) {
+    int temp = nums[start];
+    nums[start] = nums[end];
+    nums[end] = temp;
+}
+Here, we reverse the second part of the vector, which is from position nums.size() - k to the very end of the vector.
+
+
+
+6. Reversing the Whole Array:
+
+for (int start = 0, end = nums.size() - 1; start < end; start++, end--) {
+    int temp = nums[start];
+    nums[start] = nums[end];
+    nums[end] = temp;
+}
+Finally, the entire vector is reversed.
+
+
+
+The Logic behind the Three Reversals:
+
+Consider an array a and let's assume we want to rotate it by 2: a = [1,2,3,4,5,6,7].
+
+By reversing the individual parts, we first get:
+
+First part reverse: 6,5,4,3,2,1,7
+
+Second part reverse: 6,5,4,3,2,7,1
+
+Now, if we reverse the entire array:
+
+Whole array reverse: 1,7,2,3,4,5,6
+
+Notice, we've effectively rotated the array by 2 positions to the right. This rotation logic works for any size and value of k.
+
+
+
+In Summary: The rotate function achieves the rotation of a vector in three steps: It reverses two specific parts of the vector first, and then it reverses the entire vector. This method, though not immediately intuitive, is an efficient way to rotate a vector without using additional space (beyond a few variables) and in linear time.
+
+
+
+
+
+Code with inline comments:
+
+
+
+/**
+ * Rotates an array to the right by 'k' steps.
+ *
+ * @param nums: A reference to the vector to be rotated.
+ * @param k: The number of positions to rotate the vector to the right.
+ */
+void rotate(vector<int>& nums, int k) {
+    
+    // If the vector is empty, there's nothing to rotate, so return immediately.
+    if (nums.empty()) return;
+    
+    // Adjust k to handle cases where k is larger than the size of the vector.
+    // This ensures we don't rotate more than necessary.
+    k = k % nums.size();
+ 
+    // First, reverse the first part of the vector, from the beginning 
+    // to 'size - k - 1'. This prepares it for the later full reversal.
+    for (int start = 0, end = nums.size() - k - 1; start < end; start++, end--) {
+        int temp = nums[start];      // Temporary storage to swap values
+        nums[start] = nums[end];     // Put 'end' value in 'start' position
+        nums[end] = temp;            // Put 'start' value (from temp) in 'end' position
+    }
+ 
+    // Next, reverse the second part of the vector, from 'size - k' 
+    // to the end. This section represents the part of the array 
+    // that will end up at the beginning after the full rotation.
+    for (int start = nums.size() - k, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+ 
+    // Lastly, reverse the entire vector. Due to the prior reversals, 
+    // this action puts the numbers in the correct rotated order.
+    for (int start = 0, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+}

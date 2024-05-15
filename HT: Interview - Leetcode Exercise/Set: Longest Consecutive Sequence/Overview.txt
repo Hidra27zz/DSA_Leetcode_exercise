@@ -1,0 +1,298 @@
+#INTRODUCTION 
+
+Set: Longest Consecutive Sequence ( ** Interview Question)
+Write a function called longestConsecutiveSequence.
+
+This function takes a list of numbers as input and finds the length of the longest sequence of numbers that can be arranged in order.
+
+For example, if the list is [2, 1, 6, 9, 4, 3], the longest sequence in order is [1, 2, 3, 4], and the length is 4.
+
+
+
+What Do We Mean by "Sequence in Order"?
+
+A sequence in order is a group of numbers that follow each other without any gaps. For example, 1, 2, 3, 4 is a sequence in order because they follow each other. 1, 3, 4 is not a sequence in order because there is a gap; 2 is missing.
+
+
+
+What Do You Need to Do?
+
+Receive a List: The function takes a list of numbers as input.
+
+Look at Each Number: The function examines each number in the list.
+
+Find Starting Points: The function identifies good starting points for sequences.
+
+Check for Next Numbers: For each starting point, the function checks if the next number in the sequence is in the list.
+
+Count Length: It keeps track of how long each sequence is.
+
+Find Longest: The function identifies which sequence is the longest.
+
+Return Length: Finally, the function returns the length of the longest sequence.
+
+
+
+Input
+
+A list of numbers stored in a vector called nums.
+
+
+
+Output
+
+The length of the longest sequence of numbers that can be arranged in order.
+
+
+
+Example:
+
+Input List
+
+[2, 1, 6, 9, 4, 3]
+
+Output Length
+
+4
+
+Why?
+
+In this example, the longest sequence that can be arranged in order is [1, 2, 3, 4]. So, the length is 4.
+
+#HINT
+
+Pseudo Code:
+
+
+
+Objective
+
+The function aims to find the length of the longest consecutive sequence of numbers in a given list (nums).
+
+
+
+Pseudo Code Outline
+
+Function Signature
+
+Define a function named longestConsecutiveSequence that takes a list of integers nums and returns an integer.
+
+Create an Empty Set for Storing Numbers from nums
+
+Create an empty unordered set named numSet and fill it with unique numbers from nums.
+
+Initialize Variables for Storing the Longest Streak
+
+Create an integer variable named longestStreak and initialize it to zero.
+
+Check for Consecutive Sequences
+
+Loop through each number in numSet and find the length of the consecutive sequence starting from that number.
+
+Return the Length of the Longest Consecutive Sequence
+
+Return the value of longestStreak.
+
+
+
+Detailed Steps
+
+Step 1: Function Signature
+
+function longestConsecutiveSequence(nums: list of int): returns int
+
+Step 2: Create an Empty Set for Storing Numbers from nums
+
+numSet = create unordered set from nums
+
+Step 3: Initialize Variables for Storing the Longest Streak
+
+longestStreak = 0
+
+Step 4: Check for Consecutive Sequences
+
+for each number num in numSet do
+
+if (num - 1) does not exist in numSet then
+
+currentNum = num
+
+currentStreak = 1
+
+while (currentNum + 1) exists in numSet do
+
+increment currentNum by 1
+
+increment currentStreak by 1
+
+end while
+
+longestStreak = max(longestStreak, currentStreak)
+
+end if
+
+end for
+
+Step 5: Return the Length of the Longest Consecutive Sequence
+
+return longestStreak
+
+
+
+By following this pseudo code, you will create a function that finds and returns the length of the longest consecutive sequence in the given list nums.
+
+
+
+#SOLUTION
+
+int longestConsecutiveSequence(const vector<int>& nums) {
+    unordered_set<int> numSet(nums.begin(), nums.end());
+    int longestStreak = 0;
+ 
+    for (int num : numSet) {
+        if (numSet.find(num - 1) == numSet.end()) {
+            int currentNum = num;
+            int currentStreak = 1;
+ 
+            while (numSet.find(currentNum + 1) != numSet.end()) {
+                currentNum++;
+                currentStreak++;
+            }
+ 
+            longestStreak = max(longestStreak, currentStreak);
+        }
+    }
+ 
+    return longestStreak;
+}
+
+
+
+
+Overview:
+
+This code defines a function named longestConsecutiveSequence that finds the length of the longest sequence of consecutive integers in a given list nums.
+
+
+
+Code Components:
+
+1. Function Header:
+
+int longestConsecutiveSequence(const vector<int>& nums)
+
+The function's name is longestConsecutiveSequence.
+
+It takes a list of integers called nums as input.
+
+The function will return an integer.
+
+2. Create an Empty Set and Fill It:
+
+unordered_set<int> numSet(nums.begin(), nums.end());
+
+Here, we create a set called numSet and fill it with all the numbers from nums.
+
+3. Initialize the Longest Streak:
+
+int longestStreak = 0;
+
+We start by assuming the longest streak of consecutive numbers is zero.
+
+4. Loop Through Each Number in numSet:
+
+for (int num : numSet) { ... }
+
+This loop goes through each number in numSet.
+
+Inside the loop, we check if (num - 1) exists in numSet.
+
+if (numSet.find(num - 1) == numSet.end()) { ... }
+
+If (num - 1) is not found, that means num could be the start of a new sequence.
+
+5. Check for Consecutive Sequence:
+
+Inside the if block:
+
+We set currentNum to num and start a new streak counter currentStreak set to 1.
+
+Then, we enter a while loop to look for the next number in the sequence (currentNum + 1).
+
+If the next number is found in numSet, we increase both currentNum and currentStreak by 1.
+
+6. Update Longest Streak:
+
+longestStreak = max(longestStreak, currentStreak);
+
+After exiting the while loop, we update the longest streak if the current streak is longer.
+
+7. Return Longest Streak:
+
+return longestStreak;
+
+Finally, the function returns the length of the longest sequence of consecutive numbers.
+
+
+
+Step-By-Step:
+
+Start: Call the function with a list of numbers (nums).
+
+Prepare the Set: Fill numSet with numbers from nums.
+
+Begin with Zero: Start with a longest streak of 0.
+
+Look at Each Number: For each number in numSet, check if it could be the start of a new sequence.
+
+Find Sequences: If it could be the start, find how long the sequence is.
+
+Compare Lengths: Update the longest streak if needed.
+
+Result: Return the longest streak of consecutive numbers.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// Function to find the longest consecutive sequence in a vector 'nums'.
+int longestConsecutiveSequence(const vector<int>& nums) {
+ 
+  // Create a set 'numSet' to store unique numbers from 'nums'.
+  unordered_set<int> numSet(nums.begin(), nums.end());
+ 
+  // Initialize a variable 'longestStreak' to zero. It will store
+  // the length of the longest consecutive sequence found.
+  int longestStreak = 0;
+ 
+  // Loop through each number 'num' in the set 'numSet'.
+  for (int num : numSet) {
+ 
+    // If 'num - 1' is not in 'numSet', then 'num' can be
+    // the starting point of a new consecutive sequence.
+    if (numSet.find(num - 1) == numSet.end()) {
+ 
+      // Initialize 'currentNum' to 'num' and 'currentStreak' to 1.
+      int currentNum = num;
+      int currentStreak = 1;
+ 
+      // While 'currentNum + 1' exists in 'numSet', keep extending
+      // the streak by 1 and updating 'currentNum'.
+      while (numSet.find(currentNum + 1) != numSet.end()) {
+        currentNum++;
+        currentStreak++;
+      }
+ 
+      // Update 'longestStreak' with the maximum between its current
+      // value and 'currentStreak'.
+      longestStreak = max(longestStreak, currentStreak);
+    }
+  }
+ 
+  // Return the longest consecutive sequence length found.
+  return longestStreak;
+}

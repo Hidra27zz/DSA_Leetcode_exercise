@@ -1,0 +1,264 @@
+#INTRODUCTION 
+
+Set: Has Unique Chars ( ** Interview Question)
+Write a function named hasUniqueChars.
+
+The function checks if all the characters in a given text are unique or not.
+
+If they are unique, the function will return true. If even one character is repeated, the function will return false.
+
+
+
+What Do We Mean by "Unique"?
+
+Unique means that no letter shows up more than once. For example, the word "apple" does not have unique characters because 'p' appears twice. But the word "orange" has unique characters because each letter is different.
+
+
+
+What Do You Need to Do?
+
+Receive the Text: The function takes a text string as input.
+
+Check Each Character: The function goes through each character in the text one by one.
+
+Store Characters: For each new character it finds, the function will store it somewhere so it can remember it.
+
+Find Duplicates: If the function finds a character it has seen before, it will know the text does not have all unique characters.
+
+Return the Result: Finally, the function will tell us if all characters in the text are unique or not.
+
+
+
+Input
+
+A text string called str.
+
+
+
+Output
+
+true if all characters in the string are unique.
+
+false if any character in the string is repeated.
+
+
+
+Example:
+
+Input Text
+
+"hello"
+
+Output
+
+false
+
+Why?
+
+In the word "hello," the letter 'l' appears twice. So, the output is false.
+
+
+
+Another Example:
+
+Input Text
+
+"world"
+
+Output
+
+true
+
+Why?
+
+In the word "world," all the letters are different from each other. So, the output is true.
+
+
+
+#HINT
+
+Pseudo Code:
+
+
+
+Objective
+
+The purpose of this function is to check if a given string has all unique characters or not.
+
+
+
+Pseudo Code Outline
+
+Function Signature
+
+Define a function named hasUniqueChars that takes a string str as input and returns a boolean value (true or false).
+
+Create an Empty Set for Unique Characters
+
+Create an empty unordered set named charSet to store unique characters from the string.
+
+Check Each Character in the String
+
+Loop through each character in the input string.
+
+For each character, check if it's already in charSet.
+
+If yes, return false (string does not have unique characters).
+
+If no, add that character to charSet.
+
+Return True if All Characters are Unique
+
+If the loop finishes without returning false, then return true (string has unique characters).
+
+
+
+Detailed Steps
+
+Step 1: Function Signature
+
+function hasUniqueChars(str: string): returns boolean
+
+Step 2: Create an Empty Set for Unique Characters
+
+charSet = empty unordered set of char
+
+Step 3: Check Each Character in the String
+
+for each character ch in str do
+
+if ch is in charSet then
+
+return false
+
+end if
+
+add ch to charSet
+
+end for
+
+Step 4: Return True if All Characters are Unique
+
+return true
+
+#SOLUTION
+
+bool hasUniqueChars(const string& str) {
+    unordered_set<char> charSet;
+ 
+    for (char ch : str) {
+        if (charSet.find(ch) != charSet.end()) {
+            return false;
+        }
+        charSet.insert(ch);
+    }
+ 
+    return true;
+}
+
+
+
+
+Overview:
+
+This code is a function called hasUniqueChars. Its job is to check if all the characters in a given string are unique or not.
+
+
+
+Code Components:
+
+1. Function Header:
+
+bool hasUniqueChars(const string& str)
+
+The function is named hasUniqueChars.
+
+It takes a single argument, a string called str.
+
+It returns a bool, which means it will tell us 'true' or 'false'.
+
+2. Create an Empty Set:
+
+unordered_set<char> charSet;
+
+Here, we create an empty set called charSet. This set will help us keep track of characters we've already seen.
+
+3. Loop Through Each Character in String:
+
+for (char ch : str) { ... }
+
+This loop will go through each character in the string str.
+
+4. Check If Character Is Already in Set:
+
+if (charSet.find(ch) != charSet.end()) { return false; }
+
+Inside the loop, the function checks if the current character (ch) is already in charSet.
+
+If yes, the function returns false, meaning the string doesn't have unique characters.
+
+5. Add Character to Set:
+
+charSet.insert(ch);
+
+If the character was not in the set, it gets added to charSet.
+
+6. Return True:
+
+return true;
+
+If the loop finishes and we didn't return false, that means all characters were unique. So, the function returns true.
+
+
+
+Step-By-Step:
+
+Function Starts: You call the function, and it starts with the string str you provided.
+
+Make an Empty Set: It creates an empty set named charSet.
+
+Go Through Each Character: It looks at each character in your string, one at a time.
+
+Check the Set: For each character, it checks if this character is already in the set charSet.
+
+If it is, the function stops and tells you 'false', meaning the string does not have all unique characters.
+
+Add to Set: If the character is not in the set, it adds the character to charSet.
+
+All Characters are Unique: If it goes through the whole string without finding any duplicate characters, it tells you 'true'.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// Function called 'hasUniqueChars' that takes in a string 'str'
+// and returns true if all characters in the string are unique,
+// otherwise returns false.
+bool hasUniqueChars(const string& str) {
+  
+  // Create an empty set called 'charSet' to hold characters.
+  // Sets only store unique items.
+  unordered_set<char> charSet;
+  
+  // Loop through each character 'ch' in the string 'str'.
+  for (char ch : str) {
+    
+    // Check if 'ch' is already in 'charSet'.
+    if (charSet.find(ch) != charSet.end()) {
+      
+      // If 'ch' is found, it's a duplicate. Return false.
+      return false;
+    }
+    
+    // If 'ch' not found, add it to 'charSet'.
+    charSet.insert(ch);
+  }
+  
+  // If we make it through the loop without returning false,
+  // that means all characters are unique. Return true.
+  return true;
+}

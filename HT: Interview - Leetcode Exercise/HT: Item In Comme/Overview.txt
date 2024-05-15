@@ -1,0 +1,153 @@
+#INTRODUCTION 
+
+HT: Item In Common ( ** Interview Question)
+Implement a function called itemInCommon() that checks if two input vectors have at least one common item.
+
+
+
+Input:
+The function takes two vectors of integers as input parameters:
+
+vect1: a vector of integers
+
+vect2: a vector of integers
+
+
+
+Output:
+The function should return a boolean value indicating whether the two input vectors have at least one item in common or not.
+
+
+
+Constraints:
+
+The input vectors may have duplicate integers.
+
+
+
+Examples:
+
+Consider the following input vectors:
+
+vect1: {1, 2, 3, 4, 5}
+vect2: {6, 7, 8, 9, 10}
+After calling itemInCommon(vect1, vect2), the result should be:
+
+arduinoCopy code
+false
+
+
+
+
+Consider the following input vectors:
+
+vect1: {1, 2, 3, 4, 5}
+vect2: {4, 5, 6, 7, 8}
+After calling itemInCommon(vect1, vect2), the result should be:
+
+true
+
+
+
+
+Consider the following input vectors:
+
+vect1: {1, 2, 2, 4, 5}
+vect2: {6, 7, 8, 2, 10}
+After calling itemInCommon(vect1, vect2), the result should be:
+
+true
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called myMap
+
+For each element i in vector vect1
+
+Insert a key-value pair into myMap with the key as i and the value as true
+
+For each element j in vector vect2
+
+If myMap contains key j (i.e., myMap[j] is true), return true
+
+If no common element is found, return false
+
+#SOLUTION
+
+bool itemInCommon(vector<int> vect1, vector<int> vect2) {
+    unordered_map<int, bool> myMap;
+ 
+    for (auto i : vect1) {
+        myMap.insert({i, true});
+    }
+ 
+    for (auto j : vect2) {
+        if (myMap[j]) return true;
+    }
+    
+    return false;
+}
+
+
+
+
+The itemInCommon function takes two vectors of integers named vect1 and vect2 as its inputs.
+
+The function returns a boolean value indicating whether the two vectors have at least one item in common.
+
+Here's a step-by-step explanation of the code:
+
+
+
+unordered_map<int, bool> myMap;
+
+An unordered_map named myMap is created. It has integers as keys and boolean values as values. This map will be used to store the presence of each number in vect1.
+
+for (auto i : vect1) { ... }
+
+This for loop iterates over each number (i) in the vect1 vector.
+
+myMap.insert({i, true});
+
+Inside the for loop, a key-value pair consisting of the current number (i) and a boolean value true is inserted into the myMap. This indicates that the number (i) is present in vect1.
+
+for (auto j : vect2) { ... }
+
+This for loop iterates over each number (j) in the vect2 vector.
+
+if (myMap[j]) return true;
+
+Inside the for loop, an if statement checks if the current number (j) is present in the myMap. If the value associated with the key j is true, it means the number (j) is present in both vect1 and vect2. In this case, the function returns true, indicating that there is at least one item in common.
+
+return false;
+
+After the second for loop, if no common item is found between vect1 and vect2, the function returns false.
+
+
+
+
+
+Code with inline comments:
+
+
+
+bool itemInCommon(vector<int> vect1, vector<int> vect2) {
+    // Map to store the presence of numbers from vect1
+    unordered_map<int, bool> myMap;
+ 
+    // Iterate through vect1 and mark each number as present
+    for (auto i : vect1) {
+        myMap.insert({i, true});
+    }
+ 
+    // Iterate through vect2
+    for (auto j : vect2) {
+        // Check if the current number is present in myMap
+        if (myMap[j]) return true; // If found, return true
+    }
+    
+    // Return false if no common item is found
+    return false;
+}

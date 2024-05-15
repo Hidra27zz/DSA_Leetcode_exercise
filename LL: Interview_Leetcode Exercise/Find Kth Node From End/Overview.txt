@@ -1,0 +1,127 @@
+#INTRODUCTION 
+
+LL: Find Kth Node From End ( ** Interview Question)
+Implement the findKthFromEnd member function for the LinkedList class, which returns the k-th node from the end of the linked list WITHOUT USING THE LENGTH of the list.
+
+If the value of k is greater than the length of the list, the function should return nullptr.
+
+
+
+Function signature:
+
+Node* findKthFromEnd(int k)
+
+
+
+Example:
+
+Consider the following singly linked list:
+
+1 -> 2 -> 3 -> 4 -> 5 -> nullptr
+
+
+
+For the given list, the function ll.findKthFromEnd(2) should return the node with value 4, as it is the 2nd node from the end of the list.
+
+
+
+
+
+To assist you in the implementation and troubleshooting, a test suite has been provided in the Test.cpp file. This file contains a series of tests that validate the functionality of your code and will output to the "User logs" tab.
+
+You can also edit the Test.cpp file if you would like to create your own tests.
+
+
+
+#HINT
+
+Pseudo Code:
+
+Initialize two pointers: slow and fast. Both are set to the head of the linked list.
+
+Move the fast pointer k steps forward. If it becomes nullptr at any point, it means k is out of bounds, and the function returns nullptr.
+
+Traverse the linked list with both pointers (slow and fast) moving one step at a time. When the fast pointer reaches the end of the list, the slow pointer will be at the k-th element from the end.
+
+Return the slow pointer.
+
+
+
+This algorithm uses the "tortoise and hare" technique and has a time complexity of O(n), where n is the length of the linked list.
+
+#SOLUTION
+
+        Node* findKthFromEnd(int k) {
+            Node* slow = head;
+            Node* fast = head;
+            for (int i = 0; i < k; ++i) {
+                if (fast == nullptr) {
+                    return nullptr;
+                }
+                fast = fast->next;
+            }
+            while (fast != nullptr) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
+
+
+
+
+Initialize two pointers, slow and fast, both pointing to the head of the list.
+
+Move the fast pointer k steps ahead in the list.
+
+For each step from 0 to k-1, perform the following:
+
+If the fast pointer is nullptr, return nullptr (k is larger than the list size).
+
+Move the fast pointer to the next node.
+
+Traverse the list with both slow and fast pointers until the fast pointer reaches the end.
+
+While the fast pointer is not nullptr, perform the following:
+
+Move the slow pointer to the next node.
+
+Move the fast pointer to the next node.
+
+Return the slow pointer, which is now at the kth node from the end of the list.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// Function to find the kth node from the end of the list
+Node* findKthFromEnd(int k) {
+    // Initialize slow and fast pointers to head
+    Node* slow = head;
+    Node* fast = head;
+
+    // Move the fast pointer k steps ahead
+    for (int i = 0; i < k; ++i) {
+        // If fast reaches the end, k is too large
+        if (fast == nullptr) {
+            return nullptr;
+        }
+        // Move fast to the next node
+        fast = fast->next;
+    }
+
+    // Traverse the list until fast reaches the end
+    while (fast != nullptr) {
+        // Move slow and fast pointers to the next nodes
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    // Return the slow pointer, now at the kth node
+    // from the end of the list
+    return slow;
+}

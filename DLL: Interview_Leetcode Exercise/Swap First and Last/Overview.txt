@@ -1,0 +1,105 @@
+#INTRODUCTION 
+
+DLL: Swap First and Last ( ** Interview Question)
+Implement a member function called swapFirstLast() that swaps the values of the first and last nodes in the list.
+
+If the length of the list is less than 2, the function should not perform any operation.
+
+Input:
+The function is a member of the DoublyLinkedList class, which has a head and a tail pointer, as well as a length attribute.
+
+
+
+Output:
+No explicit output is returned. However, the function should modify the doubly linked list such that the values of the first and last nodes are swapped.
+
+
+
+Constraints:
+The doubly linked list may be empty, have only one node, or have two or more nodes.
+
+
+
+Example:
+
+Consider the following doubly linked list:
+
+Head: 1
+Tail: 5
+Length: 5
+ 
+Doubly Linked List:
+1 <-> 2 <-> 3 <-> 4 <-> 5
+
+
+After calling swapFirstLast(), the list should be:
+
+Head: 5
+Tail: 1
+Length: 5
+ 
+Doubly Linked List:
+5 <-> 2 <-> 3 <-> 4 <-> 1
+
+
+Note that the pointers to the nodes themselves are not swapped - only their values are exchanged.
+
+#HINT
+
+Pseudo Code:
+
+Check if the length of the list is less than 2: a. If true, return (do nothing).
+
+Store the value of the head node in a temporary variable.
+
+Set the value of the head node to the value of the tail node.
+
+Set the value of the tail node to the value stored in the temporary variable.
+
+#SOLUTION
+
+        void swapFirstLast() {
+            if (length < 2) return;
+            int temp = head->value;
+            head->value = tail->value;
+            tail->value = temp;
+        }
+
+
+
+
+The swapFirstLast member function is part of the DoublyLinkedList class.
+
+The method swaps the values of the first and last nodes in the doubly linked list.
+
+Here's a step-by-step explanation of the code:
+
+if (length < 2) return;: This condition checks if the length of the linked list is less than 2. If it is, the method returns immediately, as there is either only one node or no nodes in the list, and no swapping is needed.
+
+int temp = head->value;: An integer variable named temp is created and initialized to the value of the head node. It will be used to temporarily store the value of the head node during the swapping process.
+
+head->value = tail->value;: The value of the head node is updated to the value of the tail node, effectively setting the first node's value to the last node's value.
+
+tail->value = temp;: The value of the tail node is updated to the value stored in the temp variable, effectively setting the last node's value to the original first node's value. This completes the swapping process.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void swapFirstLast() {
+    // Check if the list has less than 2 nodes
+    if (length < 2) return;
+ 
+    // Store head node's value in a temp variable
+    int temp = head->value;
+ 
+    // Set head node's value to tail node's value
+    head->value = tail->value;
+ 
+    // Set tail node's value to the original head node's value
+    tail->value = temp;
+}

@@ -1,0 +1,230 @@
+#INTRODUCTION 
+
+HT: Two Sum ( ** Interview Question)
+Implement a function called twoSum() that finds two numbers in a given vector of integers that add up to a specific target number.
+
+If there are two pairs of numbers that sum to the target it is assumed that you're looking for the first pair of numbers that sum to the target, based on their position in the array (an example is given below).
+
+
+
+Input:
+The function takes the following inputs:
+
+A constant reference to a vector of integers nums.
+
+An integer target.
+
+
+
+Output:
+The function should return a vector of two integers representing the indices of the two numbers in the input vector nums that add up to the target value. If no such pair exists, the function should return an empty vector.
+
+
+
+Constraints:
+
+Each input would have exactly one solution.
+
+The same element in the input vector should not be used twice.
+
+
+
+Examples:
+
+______________________________________
+
+Consider the following input vector and target:
+
+nums: {1, 3, 4, 2, 5};
+target: 6;
+There are two combinations that add up to 6 which are:
+
+{2, 3} and {0, 4}
+After calling twoSum(nums, target), the result should be the first pair of numbers that sum to the target:
+
+{2, 3}
+
+
+This exact scenario will be used in this test:
+
+
+If your solution returns {0, 4} instead of {2, 3} this test will fail.
+
+
+
+
+
+______________________________________
+
+Consider the following input vector and target:
+
+nums: {2, 7, 11, 15}
+target: 9
+After calling twoSum(nums, target), the result should be:
+
+{0, 1}
+
+
+
+
+______________________________________
+
+Consider the following input vector and target:
+
+nums: {3, 2, 4}
+target: 6
+After calling twoSum(nums, target), the result should be:
+
+{1, 2}
+
+
+
+
+______________________________________
+
+Consider the following input vector and target:
+
+nums: {3, 3}
+target: 6
+After calling twoSum(nums, target), the result should be:
+
+{0, 1}
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called numMap
+
+For each index i in the input vector nums
+
+Calculate the complement of the current number as target - nums[i]
+
+Check if the complement exists in numMap
+
+If it exists, return the pair {numMap[complement], i}
+
+Add the current number nums[i] and its index i to numMap
+
+If no pair is found, return an empty vector
+
+#SOLUTION
+
+vector<int> twoSum(const vector<int>& nums, int target) {
+    unordered_map<int, int> numMap;
+ 
+    for (int i = 0; i < nums.size(); i++) {
+        int num = nums[i];
+        int complement = target - num;
+ 
+        if (numMap.find(complement) != numMap.end()) {
+            return {numMap[complement], i};
+        }
+        numMap[num] = i;
+    }
+ 
+    return {};
+}
+
+
+
+
+We want to find two numbers in a list that add up to a certain number (target).
+
+Now, let's go through the code:
+
+vector<int> twoSum(const vector<int>& nums, int target) {
+
+This line declares a function called twoSum that takes in a list of numbers (called nums) and a target number. The goal is to find two numbers from nums that add up to target.
+
+unordered_map<int, int> numMap;
+
+Think of numMap as a special kind of container where you can quickly store and look up numbers. Specifically, for each number in our list (nums), we're going to remember its position or index.
+
+for (int i = 0; i < nums.size(); i++) {
+
+This line starts a loop that goes through each number in our list one by one.
+
+int num = nums[i];
+
+For the current number we're looking at in the list, we're calling it num.
+
+int complement = target - num;
+
+Here, we're calculating what other number we'd need to find in our list to add with num to get to our target. For example, if our target is 10 and num is 3, the "complement" would be 7.
+
+if (numMap.find(complement) != numMap.end()) {
+
+This is where the magic happens! We're checking if this "complement" number has already been seen before as we were looping through our list. If it has, then we've found our two numbers that add up to the target!
+
+return {numMap[complement], i};
+
+If we've found our two numbers, we return their positions (or indices) in the list. numMap[complement] gives us the position of the complement, and i is the position of the current number.
+
+numMap[num] = i;
+
+If we haven't found our pair yet, then we remember the position of the current number (num) by storing it in our numMap.
+
+return {};
+
+If the loop finishes and we haven't found any pair of numbers that add up to the target, we return an empty list as a way of saying "no solution found".
+
+
+
+In simpler words, as we go through each number in our list, we think, "Have I seen a number before that, when added to this one, gives me the target?" If yes, we've found our answer! If not, we move on to the next number.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// Define a function named "twoSum" that aims to find two 
+// numbers in the 'nums' list which, when added together, 
+// will equal the 'target' value.
+vector<int> twoSum(const vector<int>& nums, int target) {
+    
+    // Create an "unordered_map" named "numMap". This will 
+    // help us remember which numbers we've seen and their 
+    // positions in the 'nums'.
+    unordered_map<int, int> numMap;
+ 
+    // Start a loop that will go through each number in the 
+    // 'nums' list from the beginning to the end.
+    for (int i = 0; i < nums.size(); i++) {
+        
+        // Store the current number from the list in the 
+        // variable named 'num'.
+        int num = nums[i];
+        
+        // Calculate what other number (named 'complement') 
+        // we'd need to find in our list to pair with 'num' 
+        // to reach our 'target'.
+        int complement = target - num;
+ 
+        // Now, we check if this 'complement' number has been 
+        // seen before in our loop. If it's in 'numMap', 
+        // then we've seen it!
+        if (numMap.find(complement) != numMap.end()) {
+            
+            // If we found the complement, this means 'num' 
+            // and 'complement' are the pair of numbers we 
+            // are looking for. So, we'll return their 
+            // positions from the list as our answer.
+            return {numMap[complement], i};
+        }
+        
+        // If we haven't found the pair, we save the current 
+        // number 'num' and its position 'i' into 'numMap' 
+        // for future checks. This means, "Hey map, remember 
+        // that I've seen this number at this position!"
+        numMap[num] = i;
+    }
+ 
+    // If we've gone through the entire list and didn't find 
+    // any pair that adds up to the target, we return an empty 
+    // list to signify "no solution was found".
+    return {};
+}

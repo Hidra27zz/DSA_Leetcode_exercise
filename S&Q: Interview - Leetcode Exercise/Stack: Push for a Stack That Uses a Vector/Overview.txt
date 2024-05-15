@@ -1,0 +1,103 @@
+#INTRODUCTION
+Stack: Push for a Stack That Uses a Vector ( ** Interview Question)
+In the Stack: Intro video we discussed how stacks are commonly implemented using a vector instead of a Linked List.
+
+Write the push() method to add an item onto a stack that is implemented with a vector.
+
+Input:
+The function is a member of the Stack class, which has a private member stackVector, a vector<int> representing the stack.
+
+
+
+Output:
+The function should not return any value, but it should add the given value to the top of the stack.
+
+
+
+Constraints:
+The push() function should work correctly for stacks of any size, including empty stacks.
+
+
+
+Examples:
+
+Consider the following stack:
+
+Stack:
+5
+4
+3
+2
+1
+
+
+After calling push(6) with the Stack object, the stack should look like this:
+
+Stack:
+6
+5
+4
+3
+2
+1
+
+
+
+
+Consider an empty stack:
+
+Stack:
+
+
+After calling push(1) with the Stack object, the stack should look like this:
+
+Stack:
+1
+
+#HINT
+
+Pseudo Code:
+
+Push function
+
+Add the input value to the end of the stack list
+
+
+#SOLUTION
+
+        void push(int value) {
+            stackVector.push_back(value);
+        }
+
+
+
+
+The push function is part of the Stack class that uses a vector named stackVector to implement a stack data structure. The function takes an integer value as its input and adds it to the top of the stack.
+
+
+
+Here's a step-by-step explanation of the code:
+
+
+
+stackVector.push_back(value);
+
+The push_back() function is called on stackVector with the input value as its argument. This operation adds the given value to the end of the vector, which represents the top of the stack.
+
+
+
+After the push function is executed, the stack is updated with the new element added to the top.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void push(int value) {
+    // Add the new value to the top of the stack
+    // by appending it to the end of the vector (stackVector)
+    stackVector.push_back(value);
+}

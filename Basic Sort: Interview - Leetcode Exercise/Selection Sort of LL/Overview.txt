@@ -1,0 +1,288 @@
+#INTRODUCTION 
+
+Insertion Sort of LL ( ** Interview Question)
+Your task is to implement the insertionSort() method to sort a singly linked list using the Insertion Sort algorithm. The goal is to sort the linked list in ascending order. You should only change the value fields of the existing nodes and update the next pointers appropriately.
+
+
+
+Method Signature:
+
+void insertionSort();
+
+
+
+Constraints:
+
+Do not create new nodes; you should only change the value fields and update next pointers of existing nodes.
+
+
+
+Algorithm Outline:
+
+If the list has less than two elements, it's already sorted. Exit the function.
+
+Divide the list into a "sorted" part and an "unsorted" part.
+
+The "sorted" part starts with the head node.
+
+The "unsorted" part starts with the node next to the head.
+
+Loop through each node in the "unsorted" part.
+
+For each node, find its correct position in the "sorted" part.
+
+Insert it in the correct position.
+
+Update the head and tail pointers of the sorted linked list.
+
+
+
+Example:
+
+Suppose your linked list contains the following elements:
+
+5 -> 2 -> 9 -> 1 -> 5 -> 6
+
+After performing insertionSort(), the linked list should look like this:
+
+1 -> 2 -> 5 -> 5 -> 6 -> 9
+
+
+
+Tips:
+
+Take some time to understand how the Insertion Sort algorithm works on arrays. The concept will be similar for linked lists.
+
+Drawing diagrams to visualize the linked list before and after sorting can help you understand the algorithm better.
+
+Make sure to test your code thoroughly using various scenarios, like empty lists, lists with one element, and lists with many elements.
+
+
+#HINT
+
+Pseudo Code:
+
+
+
+Check if List is Already Sorted
+
+If the list has less than 2 elements, it's already sorted, so exit the function.
+
+Initialize Sorted and Unsorted List Heads
+
+sortedListHead starts at the head of the list.
+
+unsortedListHead starts at the second node in the list.
+
+Detach sortedListHead from the rest of the list by setting its next to nullptr.
+
+Begin Main Loop
+
+Loop while unsortedListHead is not nullptr.
+
+Prepare for Insertion
+
+Pick the first node from the unsorted list (current = unsortedListHead).
+
+Move unsortedListHead to its next node.
+
+Check Where to Insert
+
+If current->value is less than sortedListHead->value:
+
+Insert at Beginning
+
+Set current->next to sortedListHead.
+
+Update sortedListHead to be current.
+
+Otherwise:
+
+Initialize Search Pointer
+
+Start at sortedListHead.
+
+Search for Insert Position
+
+Loop while searchPointer->next is not nullptr and current->value is greater than searchPointer->next->value.
+
+Move searchPointer to its next node.
+
+Insert Node
+
+Set current->next to searchPointer->next.
+
+Set searchPointer->next to current.
+
+End of Main Loop
+
+Update List Head
+
+Set the head of the list to be sortedListHead.
+
+Update List Tail
+
+Start at sortedListHead and traverse to the end.
+
+Update the tail to be the last node visited.
+
+
+#SOLUTION
+
+Let's go through the insertionSort function for a linked list step by step.
+
+The function sorts a linked list using the Insertion Sort algorithm, which builds a sorted list one element at a time.
+
+Code Breakdown:
+
+Check List Length
+
+if (length < 2) {
+    return;
+}
+Checks if the list has fewer than 2 elements.
+
+If yes, returns because the list is already sorted.
+
+Initialize sortedListHead and unsortedListHead
+
+Node* sortedListHead = head;
+Node* unsortedListHead = head->next;
+sortedListHead->next = nullptr;
+sortedListHead is set to the list's head node.
+
+unsortedListHead starts at the node right after head.
+
+sortedListHead's next is set to nullptr.
+
+Main While Loop
+
+while (unsortedListHead != nullptr) {
+This loop iterates through the unsorted part of the list.
+
+Initialize current Node
+
+Node* current = unsortedListHead;
+unsortedListHead = unsortedListHead->next;
+current is set to the first node in the unsorted list.
+
+unsortedListHead is moved to the next node.
+
+Insert at the Start?
+
+if (current->value < sortedListHead->value) {
+Checks if current should be inserted at the start of the sorted list.
+
+Update sortedListHead
+
+current->next = sortedListHead;
+sortedListHead = current;
+Sets current's next node to sortedListHead.
+
+Updates sortedListHead to be current.
+
+Else Case: Find Insert Position
+
+else {
+    Node* searchPointer = sortedListHead;
+searchPointer starts at the first node in the sorted list.
+
+Used to find the correct position for current.
+
+Inner While Loop: Find Insert Position
+
+while (searchPointer->next != nullptr && current->value > searchPointer->next->value) {
+Finds the node after which current should be inserted.
+
+Move searchPointer
+
+searchPointer = searchPointer->next;
+Moves searchPointer to the next node for the next iteration.
+
+Insert current Node
+
+current->next = searchPointer->next;
+searchPointer->next = current;
+Inserts current after searchPointer.
+
+End of Main Loop
+
+}
+The main loop ends, and the list should be sorted.
+
+Update Head and Tail
+
+head = sortedListHead;
+Node* temp = head;
+while (temp->next != nullptr) {
+    temp = temp->next;
+}
+tail = temp;
+Updates the head and tail of the sorted list.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void insertionSort() {
+    // If the list has fewer than 2 elements, it's already sorted.
+    // So, we return early.
+    if (length < 2) {
+        return;
+    }
+    
+    // Initialize "sortedListHead" to point to the head of the list.
+    // This will be the head of our sorted sublist.
+    Node* sortedListHead = head;
+    
+    // "unsortedListHead" starts at the second node. 
+    // This will be the head of our unsorted sublist.
+    Node* unsortedListHead = head->next;
+    
+    // Detach the sorted sublist from the unsorted one.
+    sortedListHead->next = nullptr;
+    
+    // Loop through each node in the unsorted sublist.
+    while (unsortedListHead != nullptr) {
+        // "current" points to the node we're going to insert into the
+        // sorted sublist.
+        Node* current = unsortedListHead;
+        
+        // Move the head of the unsorted sublist to the next node.
+        unsortedListHead = unsortedListHead->next;
+        
+        // If "current" is smaller than the head of the sorted sublist,
+        // insert "current" at the beginning.
+        if (current->value < sortedListHead->value) {
+            current->next = sortedListHead;
+            sortedListHead = current;
+        } else {
+            // "searchPointer" helps us find the correct spot for "current".
+            Node* searchPointer = sortedListHead;
+            
+            // Move "searchPointer" until we find the node that is greater
+            // than "current".
+            while (searchPointer->next != nullptr && current->value > searchPointer->next->value) {
+                searchPointer = searchPointer->next;
+            }
+            
+            // Insert "current" into the correct spot.
+            current->next = searchPointer->next;
+            searchPointer->next = current;
+        }
+    }
+    
+    // Update the "head" to point to the beginning of the sorted list.
+    head = sortedListHead;
+    
+    // Update "tail" to point to the last node of the sorted list.
+    Node* temp = head;
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+    tail = temp;
+}

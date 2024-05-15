@@ -1,0 +1,250 @@
+#INTRODUCTIONS
+
+Vector: Max Profit ( ** Interview Question)
+Title: Finding Maximum Profit from Stock Prices
+
+Introduction: The stock market is unpredictable, with prices of stocks rising and falling every day. For those who want to buy and sell stocks to gain profit, knowing when to buy at a low price and when to sell at a high price is crucial. This problem challenges you to determine the best day to buy and sell a stock to achieve maximum profit.
+
+Objective: Given a list of integers where each integer represents the stock price of a company for a particular day (index 0 is Day 1, index 1 is Day 2, and so on), your task is to find the maximum profit you could achieve from buying the stock on one day and selling it on a later day. Note that you are only allowed to complete one transaction, i.e., you can only buy and sell the stock once.
+
+Detailed Requirements:
+
+Input:
+
+A list of integers, prices, representing the stock price for each day. The list can be of any length, including being empty.
+
+Output:
+
+An integer representing the maximum profit you can make. Return 0 if no profit can be made or if the input list is empty.
+
+Examples:
+
+Example 1:
+
+Input:
+
+prices: [7,1,5,3,6,4]
+
+Output:
+
+5
+
+Explanation:
+
+Buy on Day 2 (price = 1) and sell on Day 5 (price = 6) for a profit of 6-1 = 5.
+
+Example 2:
+
+Input:
+
+prices: [7,6,4,3,1]
+
+Output:
+
+0
+
+Explanation:
+
+Prices keep falling, so no transaction will result in a profit.
+
+Example 3:
+
+Input:
+
+prices: [3,2,6,5,0,3]
+
+Output:
+
+4
+
+Explanation:
+
+Buy on Day 2 (price = 2) and sell on Day 3 (price = 6) for a profit of 6-2 = 4.
+
+
+
+Tips:
+
+As you iterate through the list of prices, keep track of the minimum stock price seen so far. This will represent the best day to buy up until the current day.
+
+For each day's price, calculate the potential profit if you were to sell on that day (subtracting the minimum price seen so far). This will give you the maximum possible profit up to that day.
+
+Keep track of the highest profit seen throughout this process. By the end of the iteration, you'll have found the maximum possible profit for the entire timeframe.
+
+
+
+The problem tests your ability to efficiently scan through data to identify optimal buying/selling points, a skill which has practical implications in many algorithmic trading scenarios.
+
+
+
+#HINT
+
+Pseudo Code:
+
+Objective: To determine the maximum profit that can be achieved by buying and selling a stock, given an array prices where the i-th element is the price of the stock on day i.
+
+Procedure:
+
+Initialization:
+
+Create a variable minPrice and set it to the maximum possible integer value (INT_MAX). This variable will be used to track the minimum stock price seen so far.
+
+Create a variable maxProfit and set it to 0. This variable will be used to track the maximum profit possible.
+
+Iterate Over Stock Prices:
+
+Start iterating through the prices array using a loop, and let's call the current price as price.
+
+Update Minimum Price:
+
+For each price: a. Update minPrice to be the smaller value between minPrice and price. This way, we ensure minPrice always contains the lowest stock price we've seen so far.
+
+Calculate Potential Profit:
+
+For the current price: a. Calculate the potential profit if we were to sell the stock today, by subtracting minPrice from the current price. Let's call this calculated value profit.
+
+Update Maximum Profit:
+
+Compare the calculated profit with our stored maxProfit. a. If profit is greater than maxProfit, then update maxProfit with the value of profit. This ensures that maxProfit always contains the highest profit achievable up to the current day.
+
+Continue Iteration:
+
+Keep iterating until all prices in the prices array have been processed.
+
+Return the Result:
+
+After the loop, return the value of maxProfit which will contain the maximum profit that can be achieved from the given stock prices.
+
+
+
+Note: The function works by continuously tracking the minimum stock price and comparing each price with this minimum to calculate the potential profit. This method ensures we always capture the best day to buy (the lowest price) and the subsequent best day to sell (to achieve the highest profit). The function makes a single pass through the data, making it efficient and effective.
+
+
+
+#SOLUTION
+
+int maxProfit(vector<int>& prices) {
+    int minPrice = INT_MAX;
+    int maxProfit = 0;
+ 
+    for (int price : prices) {
+        minPrice = min(minPrice, price);
+        int profit = price - minPrice;
+        maxProfit = max(maxProfit, profit);
+    }
+ 
+    return maxProfit;
+}
+
+
+
+
+The maxProfit function is intended to determine the maximum profit that can be achieved by buying and selling a single stock, given its price for different days. The profit is calculated as the difference between selling and buying prices, and we want to maximize this difference.
+
+
+
+1. Function Signature:
+
+int maxProfit(vector<int>& prices)
+The function is named maxProfit and it returns an integer. It accepts:
+
+vector<int>& prices: A reference to a vector of integers named prices. This vector represents the stock price for different days, in order.
+
+
+
+2. Initializing Variables:
+
+int minPrice = INT_MAX;
+int maxProfit = 0;
+minPrice: This variable is initialized to the maximum possible integer value (INT_MAX). As we go through the prices, this will keep track of the lowest price seen so far.
+
+maxProfit: This is initialized to 0 and will store the maximum profit that can be made. As we traverse the list of prices, we'll continuously update this variable if we find a greater profit.
+
+
+
+3. Looping through the Price List:
+
+for (int price : prices)
+This is a range-based for loop in C++. It will iterate through each price in the prices vector, allowing us to examine each price in turn.
+
+
+
+4. Updating the minPrice:
+
+minPrice = min(minPrice, price);
+For every price we examine, we check if it's lower than our current minPrice. If it is, we update minPrice with this new value. This helps ensure that minPrice always has the smallest value seen so far as we traverse the vector.
+
+
+
+5. Calculating the Potential Profit:
+
+int profit = price - minPrice;
+For the current price, we calculate the profit we would make if we bought the stock at the lowest price we've seen (which is minPrice) and sold it at the current price. This value is stored in the profit variable.
+
+
+
+6. Updating the maxProfit:
+
+maxProfit = max(maxProfit, profit);
+Here, we compare our current maxProfit to the profit for the current price. If the calculated profit is greater than the existing maxProfit, then we update maxProfit to this new value.
+
+
+
+7. Returning the Result:
+
+return maxProfit;
+After examining all prices, the maxProfit variable will hold the highest achievable profit. We return this value.
+
+
+
+In Summary: The maxProfit function examines the price of a stock over various days, always keeping track of the lowest price it has seen. For every day's price, it calculates the profit that could be made by buying at the lowest known price and selling at the current price. Through this process, it identifies and returns the maximum possible profit.
+
+
+
+
+
+Code with inline comments:
+
+
+
+/**
+ * Calculates the maximum profit that could be achieved by 
+ * buying and then selling one share of a stock, given its prices 
+ * on different days.
+ *
+ * @param prices: A list of prices, where the ith element 
+ *                is the price of the stock on day i.
+ * @return The maximum possible profit. Returns 0 if no profit can be made.
+ */
+int maxProfit(vector<int>& prices) {
+    
+    // Initialize 'minPrice' to the maximum possible integer value.
+    // This variable will keep track of the cheapest stock price seen so far.
+    int minPrice = INT_MAX;
+ 
+    // Initialize 'maxProfit' to 0. This variable will keep track 
+    // of the maximum profit we can achieve.
+    int maxProfit = 0;
+ 
+    // Iterate over each 'price' in the 'prices' list.
+    for (int price : prices) {
+ 
+        // Update 'minPrice' if the current 'price' is less 
+        // than the current 'minPrice'. This ensures 'minPrice' 
+        // always holds the smallest value seen so far.
+        minPrice = min(minPrice, price);
+ 
+        // Calculate the potential profit by subtracting the 
+        // current 'minPrice' from the current 'price'. This gives 
+        // the profit if we were to sell at the current price.
+        int profit = price - minPrice;
+ 
+        // If the calculated 'profit' is greater than 'maxProfit',
+        // update 'maxProfit'. This ensures 'maxProfit' always holds 
+        // the maximum profit achievable so far.
+        maxProfit = max(maxProfit, profit);
+    }
+ 
+    // Return the 'maxProfit' after examining all prices.
+    return maxProfit;
+}

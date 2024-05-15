@@ -1,0 +1,194 @@
+#INTRODUCTION
+
+Stack: Sort Stack ( ** Interview Question)
+Implement a function called sortStack() that sorts a given stack of integers in ascending order using an additional stack.
+
+
+
+Input:
+The function takes a reference to a stack of integers inputStack, with an arbitrary size.
+
+
+
+Output:
+The function should not return any value, but it should modify the input stack in-place such that the elements are sorted in ascending order, with the smallest element at the top.
+
+
+
+Constraints:
+The input stack may contain positive or negative integers. The function must use only one additional stack for sorting purposes, and no other data structures are allowed.
+
+
+
+Examples:
+
+Consider the following input stack:
+
+inputStack:
+5
+2
+7
+1
+After calling sortStack(inputStack), the input stack should be:
+
+inputStack:
+1
+2
+5
+7
+
+
+
+
+Consider the following input stack:
+
+inputStack:
+-3
+0
+4
+-1
+After calling sortStack(inputStack), the input stack should be:
+
+inputStack:
+-3
+-1
+0
+4
+
+
+#HINT
+
+Pseudo Code:
+
+Create an empty stack called additionalStack
+
+While inputStack is not empty
+
+Store the top element of inputStack in a temporary variable and pop it
+
+While additionalStack is not empty and its top element is greater than the temporary value
+
+Move the top element of additionalStack back to inputStack
+
+Push the temporary value onto additionalStack
+
+While additionalStack is not empty
+
+Move the top element of additionalStack back to inputStack
+
+At this point, inputStack is sorted in ascending order
+
+
+#SOLUTION
+
+void sortStack(stack<int>& inputStack) {
+    stack<int> additionalStack;
+ 
+    while (!inputStack.empty()) {
+        int temp = inputStack.top();
+        inputStack.pop();
+ 
+        while (!additionalStack.empty() && additionalStack.top() > temp) {
+            inputStack.push(additionalStack.top());
+            additionalStack.pop();
+        }
+ 
+        additionalStack.push(temp);
+    }
+ 
+    while (!additionalStack.empty()) {
+        inputStack.push(additionalStack.top());
+        additionalStack.pop();
+    }
+}
+
+
+
+
+The sortStack function takes a reference to a stack of integers as its input and sorts the stack in ascending order using an additional stack. Here's a step-by-step explanation of the code:
+
+
+
+stack<int> additionalStack;
+
+An additional stack of integers named additionalStack is created. This stack will be used to temporarily store and sort elements from the input stack.
+
+while (!inputStack.empty()) { ... }
+
+This while loop iterates until the input stack inputStack becomes empty.
+
+int temp = inputStack.top();
+
+Inside the while loop, the top element of the inputStack is stored in an integer variable named temp.
+
+inputStack.pop();
+
+The top element is popped from the inputStack.
+
+while (!additionalStack.empty() && additionalStack.top() > temp) { ... }
+
+This nested while loop iterates until the additionalStack becomes empty or the top element of the additionalStack is less than or equal to the value of temp.
+
+inputStack.push(additionalStack.top());
+
+Inside the nested while loop, the top element of the additionalStack is pushed back onto the inputStack.
+
+additionalStack.pop();
+
+The top element is popped from the additionalStack.
+
+additionalStack.push(temp);
+
+After the nested while loop, the temp value is pushed onto the additionalStack.
+
+while (!additionalStack.empty()) { ... }
+
+This while loop iterates until the additionalStack becomes empty.
+
+inputStack.push(additionalStack.top());
+
+Inside the while loop, the top element of the additionalStack is pushed onto the inputStack.
+
+additionalStack.pop();
+
+The top element is popped from the additionalStack.
+
+
+
+At the end of this process, the inputStack is sorted in ascending order.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void sortStack(stack<int>& inputStack) {
+    // Additional stack to temporarily store and sort elements
+    stack<int> additionalStack;
+ 
+    // Iterate until the input stack becomes empty
+    while (!inputStack.empty()) {
+        // Store the top element of the input stack in temp
+        int temp = inputStack.top();
+        inputStack.pop();
+ 
+        // Move elements from additionalStack to inputStack while
+        // they are greater than temp
+        while (!additionalStack.empty() && additionalStack.top() > temp) {
+            inputStack.push(additionalStack.top());
+            additionalStack.pop();
+        }
+ 
+        // Push temp onto the additionalStack
+        additionalStack.push(temp);
+    }
+ 
+    // Move sorted elements back to inputStack
+    while (!additionalStack.empty()) {
+        inputStack.push(additionalStack.top());
+        additionalStack.pop();
+    }
+}

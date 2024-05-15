@@ -1,0 +1,350 @@
+#INTRODUCTION 
+
+Merge Two Sorted LL ( ** Interview Question)
+Your task is to implement the merge(LinkedList& otherList) method.
+
+This method merges two sorted linked lists into a single sorted linked list. The LinkedList class has a head, tail, and length members. The nodes have value and next fields.
+
+
+
+Method Signature:
+
+void merge(LinkedList& otherList);
+
+
+
+Constraints:
+
+The otherList will be empty after the merge operation.
+
+
+
+Algorithm Outline:
+
+Create a dummy node to help with merging.
+
+Initialize a current pointer to the dummy node.
+
+While both lists have elements:
+
+Compare the value of the head nodes.
+
+Add the smaller node to current->next.
+
+Move to the next node in the chosen list.
+
+Update current to its next node.
+
+If one list is empty, add the remaining nodes from the other list.
+
+Update head, tail, and length fields for the merged list.
+
+Clear the head, tail, and length fields of otherList.
+
+
+
+Example:
+
+Suppose list1 contains: 1 -> 3 -> 5
+
+And list2 contains: 2 -> 4 -> 6
+
+After list1.merge(list2);, list1 should contain:
+
+1 -> 2 -> 3 -> 4 -> 5 -> 6
+
+And list2 should be empty.
+
+
+
+Tips:
+
+Understanding merging sorted arrays will help you understand this for linked lists.
+
+Use diagrams to visualize the linked lists and their merging process.
+
+Test your code with various scenarios, like empty lists and lists of different lengths.
+
+#HINT
+
+Pseudo Code:
+
+
+
+Initialize Pointers and Dummy Node
+
+Get the head of the otherList and call it otherHead.
+
+Create a dummy node with value 0.
+
+Initialize current to point to the dummy node.
+
+Start Merging
+
+Loop while head and otherHead are not nullptr.
+
+Compare Node Values
+
+If the value at head is smaller than the value at otherHead:
+
+Attach Node from Original List
+
+Set current->next to head.
+
+Move head to the next node in the original list.
+
+Otherwise:
+
+Attach Node from Other List
+
+Set current->next to otherHead.
+
+Move otherHead to the next node in the otherList.
+
+Advance Current Pointer
+
+Move current to its next node.
+
+End of Loop
+
+Handle Remaining Nodes in Original List
+
+If head is not nullptr:
+
+Attach the remaining nodes from the original list to current.
+
+Traverse to the end of the list.
+
+Handle Remaining Nodes in Other List
+
+If otherHead is not nullptr:
+
+Attach the remaining nodes from the otherList to current.
+
+Traverse to the end of the list.
+
+Update Tail
+
+The tail of the merged list is the node where current is pointing.
+
+Update Head and Clean Up
+
+The head of the merged list is dummy->next.
+
+Delete the dummy node.
+
+Update Length
+
+Add the length of otherList to the length of the merged list.
+
+Reset Other List
+
+Set the head, tail, and length of otherList to nullptr and 0, respectively.
+
+
+#SOLUTION
+
+        void merge(LinkedList& otherList) {
+            Node* otherHead = otherList.getHead();
+            Node* dummy = new Node(0);
+            Node* current = dummy;
+        
+            while (head != nullptr && otherHead != nullptr) {
+                if (head->value < otherHead->value) {
+                    current->next = head;
+                    head = head->next;
+                } else {
+                    current->next = otherHead;
+                    otherHead = otherHead->next;
+                }
+                current = current->next;
+            }
+        
+            if (head != nullptr) {
+                current->next = head;
+                while (current->next != nullptr) {
+                    current = current->next;
+                }
+            } else {
+                current->next = otherHead;
+                while (current->next != nullptr) {
+                    current = current->next;
+                }
+            }
+        
+            tail = current;
+            head = dummy->next;
+            delete dummy;
+            length += otherList.getLength();
+        
+            otherList.head = nullptr;
+            otherList.tail = nullptr;
+            otherList.length = 0;
+        }
+
+
+
+
+The merge function merges two sorted linked lists (LinkedList) into a single, sorted linked list.
+
+The function assumes that both the current list and the otherList passed as an argument are sorted.
+
+Code Breakdown:
+
+
+
+Initialize Pointers
+
+Node* otherHead = otherList.getHead();
+Node* dummy = new Node(0);
+Node* current = dummy;
+otherHead stores the head of otherList.
+
+dummy is a placeholder node.
+
+current starts at dummy and will traverse the list.
+
+Main While Loop for Merging
+
+while (head != nullptr && otherHead != nullptr) {
+Loops as long as both lists have elements.
+
+Compare and Add Smaller Node
+
+if (head->value < otherHead->value) {
+    current->next = head;
+    head = head->next;
+} else {
+    current->next = otherHead;
+    otherHead = otherHead->next;
+}
+Checks which list has a smaller node.
+
+Adds the smaller node to current->next.
+
+Moves to the next node in the list that had the smaller node.
+
+Move current Forward
+
+current = current->next;
+Moves current to its next.
+
+Remaining Nodes in head
+
+if (head != nullptr) {
+    current->next = head;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+}
+Adds remaining nodes from head if any.
+
+Moves current to the last node.
+
+Remaining Nodes in otherHead
+
+else {
+    current->next = otherHead;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+}
+Adds remaining nodes from otherHead if any.
+
+Moves current to the last node.
+
+Update Tail, Head, and Length
+
+tail = current;
+head = dummy->next;
+delete dummy;
+length += otherList.getLength();
+Sets the tail to current.
+
+Updates head to start after dummy.
+
+Deletes dummy.
+
+Updates the length of the list.
+
+Clear otherList
+
+otherList.head = nullptr;
+otherList.tail = nullptr;
+otherList.length = 0;
+Empties otherList.
+
+
+
+That wraps up the merge function. It takes two sorted linked lists, merges them into a single sorted list, and empties otherList.
+
+
+
+
+
+Code with inline comments:
+
+
+
+void merge(LinkedList& otherList) {
+    // Initialize a pointer to the head node of the
+    // other linked list we are going to merge.
+    Node* otherHead = otherList.getHead();
+ 
+    // Create a 'dummy' node to serve as a starting point.
+    // This will simplify handling the head of the new list.
+    Node* dummy = new Node(0);
+ 
+    // 'current' will point to the last node in our new,
+    // merged list as we build it up.
+    Node* current = dummy;
+ 
+    // The loop will run as long as neither of the linked
+    // lists is empty.
+    while (head != nullptr && otherHead != nullptr) {
+ 
+        // Compare the values at the heads of the two lists.
+        // We will take the node with the smaller value.
+        if (head->value < otherHead->value) {
+            // The current node from our list is smaller.
+            current->next = head; // Add it to the merged list.
+            head = head->next;    // Move our list's head.
+        } else {
+            // The node from the other list is smaller.
+            current->next = otherHead; // Add it to merged list.
+            otherHead = otherHead->next; // Move other head.
+        }
+        // Move 'current' to the last node in our new list.
+        current = current->next;
+    }
+ 
+    // At this point, one of the lists is empty. If there
+    // are any elements left in the other list, we append
+    // them to the end of the merged list.
+    if (head != nullptr) {
+        current->next = head;
+        while (current->next != nullptr) {
+            current = current->next; // Move to list's end.
+        }
+    } else {
+        current->next = otherHead;
+        while (current->next != nullptr) {
+            current = current->next; // Move to list's end.
+        }
+    }
+ 
+    // Final housekeeping steps. Point our list's head to the
+    // first real element, update the tail, and delete dummy.
+    tail = current;
+    head = dummy->next;
+    delete dummy;
+ 
+    // Update the length of our list by adding the length
+    // of the other list.
+    length += otherList.getLength();
+ 
+    // Clear the other list as it's now merged into ours.
+    otherList.head = nullptr;
+    otherList.tail = nullptr;
+    otherList.length = 0;
+}

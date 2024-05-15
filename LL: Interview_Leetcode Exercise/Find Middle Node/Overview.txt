@@ -1,0 +1,177 @@
+#INTRODUCTION 
+
+LL: Find Middle Node ( ** Interview Question)
+Implement a member function, findMiddleNode(), which finds and returns the middle node of the linked list.
+
+Note: this LinkedList implementation does not have a length member variable.
+
+
+
+Function Signature:
+
+Node* findMiddleNode();
+
+
+
+Input:
+
+The linked list can have any number of nodes (0 to n).
+
+Node values are integers.
+
+
+
+Output:
+
+Return a pointer to the middle node of the linked list.
+
+If the list has an even number of nodes, return the second middle node (the one closer to the end).
+
+
+
+Constraints:
+
+You are not allowed to use any additional data structures (such as arrays) or modify the existing data structure.
+
+You can only traverse the linked list once.
+
+
+
+Example:
+
+Suppose you have a LinkedList object, list, with the following values:
+1 -> 2 -> 3 -> 4 -> 5
+
+
+
+After calling the findMiddleNode() function:
+
+Node* middle = list.findMiddleNode();
+
+
+The middle pointer should point to the node with value 3.
+
+
+
+
+
+Now suppose you have a LinkedList object, list, with the following values:
+1 -> 2 -> 3 -> 4 -> 5 -> 6
+
+
+
+After calling the findMiddleNode() function:
+
+Node* middle = list.findMiddleNode();
+
+
+The middle pointer should point to the node with value 4.
+
+
+
+
+
+To assist you in the implementation and troubleshooting, a test suite has been provided in the Test.cpp file. This file contains a series of tests that validate the functionality of your code and will output to the "User logs" tab.
+
+You can also edit the Test.cpp file if you would like to create your own tests.
+
+
+
+
+
+#HINT
+
+Pseudo Code:
+
+Create a function named 'findMiddleNode' that returns a pointer to a Node
+
+Initialize two pointers, 'slow' and 'fast', both pointing to the head of the list
+
+While 'fast' is not null and the 'next' pointer of 'fast' is not null, do the following:
+
+Move 'slow' one step forward (slow = slow->next)
+
+Move 'fast' two steps forward (fast = fast->next->next)
+
+When the loop terminates, 'slow' will be pointing to the middle node of the list
+
+Return the 'slow' pointer
+
+
+
+#SOLUTION
+
+Common mistakes:
+
+Make sure you have both conditionals in your while loop:
+
+while (fast != nullptr && fast->next != nullptr)
+
+One of the conditionals is for a LL with an odd number of nodes and the other is for an even number
+
+You cannot create a new length variable
+
+This needs to be done in one pass (one loop)
+
+
+
+
+
+Solution:
+
+
+
+        Node* findMiddleNode() {
+            Node* slow = head;
+            Node* fast = head;
+            while (fast != nullptr && fast->next != nullptr) {
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+            return slow;
+        }
+
+
+The findMiddleNode() function uses the "tortoise and hare" algorithm to find the middle node of a linked list. Here's a step-by-step explanation of the logic:
+
+
+
+Initialize two pointers, slow and fast, both pointing to the head of the linked list.
+
+Traverse the linked list using a while loop. The loop continues as long as fast is not nullptr (i.e., it has not reached the end of the list), and fast->next is also not nullptr (i.e., there is at least one more node after the current fast node).
+
+Inside the loop, move the slow pointer one step forward (i.e., slow = slow->next) and the fast pointer two steps forward (i.e., fast = fast->next->next).
+
+Since the fast pointer moves twice as fast as the slow pointer, by the time the fast pointer reaches the end of the list or goes beyond it, the slow pointer will be at the middle node.
+
+When the loop terminates, return the slow pointer, which now points to the middle node.
+
+
+
+In the case of an even number of nodes, the fast pointer will reach the end of the list, while the slow pointer will point to the first middle node (the one closer to the head). For an odd number of nodes, the fast pointer will go beyond the end of the list, and the slow pointer will point to the exact middle node.
+
+
+
+
+
+Code with inline comments:
+
+
+
+Node* findMiddleNode() {
+    // Initialize slow and fast pointers to head
+    Node* slow = head;
+    Node* fast = head;
+ 
+    // Traverse the list until fast reaches the end
+    while (fast != nullptr && fast->next != nullptr) {
+        // Move slow pointer one step forward
+        slow = slow->next;
+        
+        // Move fast pointer two steps forward
+        fast = fast->next->next;
+    }
+    
+    // When the loop ends, slow points to the middle
+    return slow;
+}

@@ -1,0 +1,161 @@
+#INTRODUCTION 
+
+HT: Find Duplicates ( ** Interview Question)
+Implement a function called findDuplicates() that finds and returns all the duplicate elements in a given vector of integers.
+
+
+
+Input:
+The function takes a constant reference to a vector of integers nums.
+
+
+
+Output:
+The function should return a vector of integers containing all the duplicate elements in the input vector nums. The order of the elements in the output vector does not matter.
+
+
+
+Examples:
+
+
+
+Consider the following input vector:
+
+nums: {1, 2, 3, 4, 4, 5, 5, 6, 7, 8}
+After calling findDuplicates(nums), the result should be:
+
+{4, 5}
+
+
+
+
+Consider the following input vector:
+
+nums: {10, 20, 30, 20, 40, 50, 30}
+After calling findDuplicates(nums), the result should be:
+
+{20, 30}
+
+
+
+
+Consider the following input vector:
+
+nums: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+After calling findDuplicates(nums), the result should be:
+
+{}
+
+
+#HINT
+
+Pseudo Code:
+
+Create an unordered_map called numCounts
+
+For each element num in the input vector nums
+
+Increment the count of num in numCounts
+
+Create an empty vector called duplicates
+
+For each key-value pair (entry) in numCounts
+
+If the value (entry.second) is greater than 1
+
+Add the key (entry.first) to the duplicates vector
+
+Return the duplicates vector
+
+
+#SOLUTION
+
+vector<int> findDuplicates(const vector<int>& nums) {
+    unordered_map<int, int> numCounts;
+    for (int num : nums) {
+        numCounts[num]++;
+    }
+    vector<int> duplicates;
+    for (const auto& entry : numCounts) {
+        if (entry.second > 1) {
+            duplicates.push_back(entry.first);
+        }
+    }
+    return duplicates;
+}
+
+
+
+
+The findDuplicates function takes a constant reference to a vector of integers named nums as its input.
+
+The function returns a vector containing all the duplicate numbers in nums.
+
+Here's a step-by-step explanation of the code:
+
+
+
+unordered_map<int, int> numCounts;
+
+An unordered_map named numCounts is created. It has integers as keys and integers as values. This map will be used to store the counts of each number in the nums vector.
+
+for (int num : nums) { ... }
+
+This for loop iterates over each number (num) in the nums vector.
+
+numCounts[num]++;
+
+Inside the for loop, the count of the current number (num) in the numCounts map is incremented by 1.
+
+vector<int> duplicates;
+
+A vector of integers named duplicates is created. This vector will store the duplicate numbers found in the nums vector.
+
+for (const auto& entry : numCounts) { ... }
+
+This for loop iterates over each key-value pair (entry) in the numCounts map.
+
+if (entry.second > 1) { ... }
+
+Inside the for loop, an if statement checks if the count of the current key-value pair (entry) is greater than 1.
+
+duplicates.push_back(entry.first);
+
+If the if statement's condition is true, it means the current number (entry.first) is a duplicate. The number is added to the duplicates vector.
+
+return duplicates;
+
+After the second for loop, the duplicates vector containing the duplicate numbers is returned.
+
+
+
+
+
+Code with inline comments:
+
+
+
+vector<int> findDuplicates(const vector<int>& nums) {
+    // Map to store number counts
+    unordered_map<int, int> numCounts;
+ 
+    // Iterate through the nums vector and count each number
+    for (int num : nums) {
+        numCounts[num]++;
+    }
+ 
+    // Vector to store the duplicate numbers
+    vector<int> duplicates;
+ 
+    // Iterate through the number counts
+    for (const auto& entry : numCounts) {
+        // Check if the count is greater than 1 (duplicate)
+        if (entry.second > 1) {
+            // Add the duplicate number to the duplicates vector
+            duplicates.push_back(entry.first);
+        }
+    }
+ 
+    // Return the duplicates vector
+    return duplicates;
+}

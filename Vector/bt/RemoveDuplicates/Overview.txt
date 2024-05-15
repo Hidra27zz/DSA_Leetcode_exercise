@@ -1,0 +1,276 @@
+#INTRUCTIONS
+Vector: Remove Duplicates ( ** Interview Question)
+Title: Removing Duplicate Consecutive Integers in a Sorted List
+
+Introduction: Working with sorted lists is common in programming. While these lists offer the advantage of easier search and analysis, they might contain consecutive duplicates which can be redundant for some applications. The challenge here is to efficiently remove these consecutive duplicate values in-place, without needing a separate data structure.
+
+Objective: Write a function that, given a sorted list of integers, removes all consecutive duplicates and returns the length of the modified list. The function should perform the operation in-place, which means you shouldn't use an additional list to store the result.
+
+Detailed Requirements:
+
+Input:
+
+A sorted vector of integers (nums). The vector can be of any length, including being empty.
+
+Output:
+
+An integer representing the length of the vector after removing consecutive duplicates.
+
+The original vector (nums) should be modified in-place to contain only the unique consecutive values up to the returned length. Elements beyond the new length in the original list don't matter.
+
+Examples:
+
+Example 1:
+
+Input:
+
+nums: [1,1,2,2,2,3,4,4]
+
+Output:
+
+5
+
+Modified nums:
+
+[1,2,3,4,X,X,X,X] (where X can be any number since it's beyond the new length)
+
+Example 2:
+
+Input:
+
+nums: [1,2,3,4]
+
+Output:
+
+4
+
+Modified nums:
+
+[1,2,3,4] (No changes needed as there are no consecutive duplicates)
+
+Example 3:
+
+Input:
+
+nums: []
+
+Output:
+
+0
+
+Modified nums:
+
+[] (No change as the list is empty)
+
+
+
+Tips:
+
+You can achieve the goal using two pointers. One (readPointer) to read the current value and the other (writePointer) to indicate where the next unique value should be written.
+
+Start reading from the second element and compare with the previous element. If they are not the same, it means you've encountered a new unique value. Write this value at the writePointer's position and move the writePointer.
+
+Using this approach ensures you only keep one instance of each consecutive duplicate, effectively compacting the list in-place.
+
+
+
+Remember, the goal is to work within the given list and not utilize additional memory for storing results (this means you cannot use another data structure like a set). Your solution should strive to be space-efficient while being clear and readable.
+
+
+
+#HINT
+
+Pseudo Code:
+
+Objective: To remove duplicates from a sorted array, nums, and return the length of the array after removal.
+
+Procedure:
+
+Check for Empty Array:
+
+If the size of nums is 0 (meaning the array is empty):
+
+Return 0 immediately, as there are no elements to process.
+
+Initialization:
+
+Create a writePointer and initialize it to 1. This pointer indicates where we should place the next unique element.
+
+Iterate Over the Array:
+
+Start iterating through the array beginning from the second element, since the first element is always unique in a sorted array.
+
+For this iteration, use a pointer called readPointer, starting from the index 1.
+
+Check for Duplicates:
+
+For each iteration: a. Compare the current element (pointed by readPointer) with the previous element (index readPointer - 1).
+
+b. If they are different: i. It means the current element is not a duplicate. ii. Place this non-duplicate element in the position indicated by writePointer. iii. Move writePointer forward by 1 to prepare for the next unique element.
+
+c. If they are the same, it means the element is a duplicate, and we don't copy or move the writePointer. We just move to the next element with readPointer.
+
+Continue Iteration:
+
+Keep iterating until the readPointer has traversed the entire array.
+
+Return the Result:
+
+After the loop, the position of writePointer will indicate the number of unique elements in the array (because we've been incrementing it each time we find a unique element).
+
+Return the value of writePointer.
+
+End Procedure:
+
+The function will return the length of the array after duplicates have been removed.
+
+
+
+Note: The function assumes the input array, nums, is sorted. The technique leverages this property by only comparing each element with its previous element, rather than comparing it with all other elements. This makes the process more efficient. The reason we don't delete duplicates from the array directly is to avoid the computational cost of resizing the array multiple times. Instead, we're simply overwriting duplicates and returning the size of the non-duplicate segment, which is an efficient way to handle the problem.
+
+
+
+
+#SOLUTION
+
+int removeDuplicates(vector<int>& nums) {
+    if (nums.size() == 0) {
+        return 0;
+    }
+ 
+    int writePointer = 1;
+ 
+    for (int readPointer = 1; readPointer < nums.size(); readPointer++) {
+        if (nums[readPointer] != nums[readPointer - 1]) {
+            nums[writePointer] = nums[readPointer];
+            writePointer++;
+        }
+    }
+ 
+    return writePointer;
+}
+
+
+
+
+The removeDuplicates function is designed to modify a given sorted vector of integers (nums) by removing duplicates. It then returns the length of the vector after duplicates have been removed. This removal is done "in-place", meaning no extra space (like a new array) is used for this operation.
+
+
+
+Here's the logic behind the code:
+
+
+
+1. Function Signature:
+
+int removeDuplicates(vector<int>& nums)
+The function is named removeDuplicates and returns an integer. It takes one argument:
+
+vector<int>& nums: This is a reference to a vector of integers named nums. Since it's passed by reference, changes made to nums inside the function will reflect in the original list outside the function.
+
+
+
+2. Check for an Empty Vector:
+
+if (nums.size() == 0) {
+    return 0;
+}
+Before doing any processing, we first check if nums is empty. If it is, we immediately return 0, since there are no elements (or duplicates) in it.
+
+
+
+3. Initializing the writePointer:
+
+int writePointer = 1;
+Here, we declare and initialize writePointer to 1. This pointer is responsible for indicating where we should overwrite values in the array. It starts at 1 (second element) since the first element is always unique in a sorted array.
+
+
+
+4. Looping through the vector with readPointer:
+
+for (int readPointer = 1; readPointer < nums.size(); readPointer++)
+The loop initializes readPointer at 1 and continues until the end of the vector. This pointer is responsible for reading and exploring each element in nums.
+
+
+
+5. Checking for a New Unique Value:
+
+if (nums[readPointer] != nums[readPointer - 1])
+For each position readPointer points to, we check if the current number is different from the previous one. If they're different, it's a new unique value.
+
+
+
+6. Writing the New Unique Value:
+
+nums[writePointer] = nums[readPointer];
+If we've identified a new unique value (as per the previous step), we overwrite the value at the position writePointer with this value.
+
+
+
+7. Moving the writePointer:
+
+writePointer++;
+Once we've written a unique value, we move the writePointer to the next position. This ensures that the next unique value we find will be placed immediately after the previous unique value.
+
+
+
+8. Returning the Length of the Unique Values:
+
+return writePointer;
+After the loop completes, writePointer points to the position immediately after the last unique value. Since nums was a sorted list and duplicates are contiguous, this position also represents the length of the list with duplicates removed.
+
+
+
+In Summary: The removeDuplicates function uses two pointers (readPointer and writePointer) to traverse and modify the input vector. The readPointer explores each value, checking for unique numbers, while the writePointer writes these unique numbers to their new positions. By the end, contiguous duplicates are effectively squeezed out, and the function returns the length of the unique values list.
+
+
+
+
+
+Code with inline comments:
+
+
+
+/**
+ * Modifies the input list 'nums' to remove consecutive duplicate values.
+ * It is assumed that 'nums' is sorted.
+ * 
+ * @param nums: A sorted list of integers.
+ * @return The new length of 'nums' after duplicates are removed.
+ */
+int removeDuplicates(vector<int>& nums) {
+    
+    // Check if the input list 'nums' is empty. If it is, 
+    // immediately return 0 because there are no elements.
+    if (nums.size() == 0) {
+        return 0;
+    }
+ 
+    // Initialize the 'writePointer' to 1. This pointer 
+    // represents where the next unique number should be written.
+    int writePointer = 1;
+ 
+    // Start iterating from the second element, using 
+    // 'readPointer'. This pointer explores each element in 'nums'.
+    for (int readPointer = 1; readPointer < nums.size(); readPointer++) {
+ 
+        // Compare the current number with the previous number.
+        // If they are different, it means the current number 
+        // is a unique number (because the list is sorted).
+        if (nums[readPointer] != nums[readPointer - 1]) {
+            
+            // Write the unique number to the position indicated 
+            // by 'writePointer'.
+            nums[writePointer] = nums[readPointer];
+ 
+            // Move the 'writePointer' to the next position.
+            writePointer++;
+        }
+        // If the current number is the same as the previous one,
+        // skip it and move to the next element.
+    }
+ 
+    // Once the loop completes, 'writePointer' indicates the 
+    // number of unique elements. Return this value.
+    return writePointer;
+}

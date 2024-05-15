@@ -1,0 +1,165 @@
+#INTRODUCTION
+
+Stack: Parentheses Balanced ( ** Interview Question)
+Implement a function called isBalancedParentheses() that checks if the input string contains balanced parentheses.
+
+
+
+Input:
+The function takes a constant reference to a string parentheses.
+
+
+
+Output:
+The function should return a boolean value indicating whether the input string contains balanced parentheses or not.
+
+
+
+Constraints:
+The input string may contain any printable ASCII characters, but the function should only consider the opening and closing parentheses '(' and ')' for determining balance.
+
+
+
+Examples:
+
+Consider the following input string:
+
+parentheses: "()"
+After calling isBalancedParentheses(parentheses), the result should be:
+
+true
+
+
+
+
+Consider the following input string:
+
+parentheses: "(()))"
+After calling isBalancedParentheses(parentheses), the result should be:
+
+false
+
+
+
+
+Consider the following input string:
+
+parentheses: ")("
+After calling isBalancedParentheses(parentheses), the result should be:
+
+false
+
+
+#HINT
+
+Pseudo Code:
+
+Create a stack of characters called charStack
+
+For each character p in the input string parentheses
+
+If p is an opening parenthesis
+
+Push p onto charStack
+
+Else if p is a closing parenthesis
+
+If charStack is empty or the top character of charStack is not an opening parenthesis
+
+Return false
+
+Pop the top character from charStack
+
+Return true if charStack is empty, otherwise return false
+
+#SOLUTION
+
+bool isBalancedParentheses(const string& parentheses) {
+    stack<char> charStack;
+    for (char p : parentheses) {
+        if (p == '(') {
+            charStack.push(p);
+        } else if (p == ')') {
+            if (charStack.empty() || charStack.top() != '(') {
+                return false;
+            }
+            charStack.pop();
+        }
+    }
+    return charStack.empty();
+}
+
+
+
+
+The isBalancedParentheses function takes a const string reference as its input and checks if the given string contains balanced parentheses. Here's a step-by-step explanation of the code:
+
+
+
+stack<char> charStack;
+
+A stack of characters named charStack is created. This stack will be used to store opening parentheses as they are encountered in the input string.
+
+for (char p : parentheses) { ... }
+
+This range-based for loop iterates through each character p in the input string parentheses.
+
+if (p == '(') { ... }
+
+Inside the for loop, if the character p is an opening parenthesis, the code inside the if statement is executed.
+
+charStack.push(p);
+
+If the character p is an opening parenthesis, it is pushed onto the charStack.
+
+else if (p == ')') { ... }
+
+If the character p is a closing parenthesis, the code inside the else-if statement is executed.
+
+if (charStack.empty() || charStack.top() != '(') { ... }
+
+Inside the else-if statement, the function checks if the charStack is empty or if the top element of the stack is not an opening parenthesis. If either condition is true, the code inside the if statement is executed.
+
+return false;
+
+If the charStack is empty or the top element is not an opening parenthesis, it means that the parentheses are not balanced, so the function returns false.
+
+charStack.pop();
+
+If the top element of the stack is an opening parenthesis, it is popped from the charStack, indicating that a pair of balanced parentheses has been found.
+
+return charStack.empty();
+
+After the for loop, if the charStack is empty, it means that all the parentheses in the input string were balanced, so the function returns true. Otherwise, it returns false.
+
+
+
+
+
+Code with inline comments:
+
+
+
+bool isBalancedParentheses(const string& parentheses) {
+    // Stack to store the opening parentheses
+    stack<char> charStack;
+ 
+    // Iterate through the input string
+    for (char p : parentheses) {
+        // If the current character is an opening parenthesis, push it onto the stack
+        if (p == '(') {
+            charStack.push(p);
+        } else if (p == ')') { // If the current character is a closing parenthesis
+            // Check if the stack is empty or the top of the stack 
+            // is not an opening parenthesis
+            if (charStack.empty() || charStack.top() != '(') {
+                return false;
+            }
+            // Pop the matching opening parenthesis from the stack
+            charStack.pop();
+        }
+    }
+ 
+    // Return true if the stack is empty, indicating balanced parentheses
+    return charStack.empty();
+}

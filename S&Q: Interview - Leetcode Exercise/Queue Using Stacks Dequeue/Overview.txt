@@ -1,0 +1,184 @@
+#INTRODUCTION
+
+Queue Using Stacks: Dequeue ( ** Interview Question) NEW
+In the realm of data structures, a queue represents a First-In-First-Out (FIFO) mechanism, where the dequeue operation is used to remove the front-most item. Your task is to implement this dequeue operation, but not with a standard queue structure. The challenge is to implement this operation using two stacks (stack1 and stack2) to simulate the behavior of a queue.
+
+
+
+Background:
+
+You're provided with the QueueUsingTwoStacks class that uses two stacks (stack1 and stack2) to simulate the operations of a queue. The class contains:
+
+A front method that returns the front-most item of the queue without removing it.
+
+An isEmpty method that checks if the queue is empty.
+
+An enqueue method that adds an item to the end of the queue.
+
+A partially implemented dequeue method that you need to perfect.
+
+
+
+Task:
+
+Your mission is to perfect the dequeue method of the QueueUsingTwoStacks class, ensuring that it adheres to the behavior of a typical queue's dequeue operation.
+
+
+
+Constraints:
+
+You should strive for optimal time complexity.
+
+Only standard stack operations (push, pop, top, and empty) are allowed.
+
+No additional data structures or helper methods should be used.
+
+
+
+Tips:
+
+Reflect on the unique LIFO property of a stack and how using two of them can simulate the FIFO nature of a queue.
+
+Examine the front method carefully. It provides a clue on how to retrieve (and remove) the front-most item using the two stacks.
+
+For dequeue, focus on how to effectively remove the front-most item. Remember, in our setup, stack1 mainly deals with the enqueue operation, and stack2 handles the dequeue and front operations.
+
+If stack2 is empty and a dequeue operation is requested, the items from stack1 must be transferred to stack2 in a manner that the front-most item in the queue becomes accessible at the top of stack2.
+
+#HINT
+
+Pseudo Code:
+
+
+
+Function dequeue:
+
+Actions:
+
+If stack2 is empty:
+
+While stack1 is not empty:
+
+Push the top element of stack1 onto stack2.
+
+Pop the top element from stack1.
+
+If stack2 is not empty:
+
+Pop the top element from stack2.
+
+End Function.
+
+#SOLUTION
+
+    void dequeue() {
+        if (stack2.empty()) {
+            while (!stack1.empty()) {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+ 
+        if (!stack2.empty()) {
+            stack2.pop();
+        }
+    }
+
+
+
+
+The primary purpose of the dequeue function is to remove the front item of the queue. To achieve this functionality using two stacks (stack1 and stack2), the function works as follows:
+
+Check if stack2 is Empty:
+
+if (stack2.empty()) { ... }
+
+Before we proceed with the actual dequeue operation, we need to ensure that there's an item ready to be dequeued. This check is essential because, in our two-stack implementation of a queue:
+
+stack1 is used for pushing (enqueueing) items, which means it holds items in the reverse order of their arrival.
+
+stack2 holds items in the correct order for dequeueing.
+
+If stack2 is empty, it implies that we haven't yet prepared it for the dequeue operation, and we need to move items from stack1 to stack2 to maintain the queue's order. If stack2 is already populated, it contains items in the order they were enqueued, with the oldest item on top, ready for dequeueing.
+
+Transfer Items from stack1 to stack2:
+
+while (!stack1.empty()) { ... }
+
+Inside this loop, items are moved from stack1 to stack2. This operation essentially inverts the order of items:
+
+The topmost item of stack1 (latest enqueued) will become the bottom item of stack2.
+
+The bottom item of stack1 (earliest enqueued) will become the topmost item of stack2.
+
+The reason behind this inversion is to maintain the order of the queue. When the earliest enqueued item in stack1 becomes the topmost item in stack2, it becomes readily accessible for dequeueing.
+
+This inversion is achieved by:
+
+Taking the top item from stack1.
+
+Pushing it onto stack2.
+
+Then, removing the top item from stack1.
+
+Actual Dequeue Operation:
+
+if (!stack2.empty()) { ... }
+
+Once we're sure that stack2 is populated (either it already had items, or we've just moved items from stack1), we can perform the actual dequeue operation.
+
+The function checks again if stack2 is not empty to ensure it doesn't attempt to pop from an empty stack, which would result in an error.
+
+Then, the top item of stack2 (which represents the front item of our queue due to our inversion process) is popped off, simulating the dequeue operation of a standard queue.
+
+In summary, this dequeue function implements the dequeue operation of a queue using two stacks. It ensures that the items maintain their order of entry (First In, First Out) by inverting items from stack1 to stack2 and then pops from stack2 to dequeue.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// The method definition for the `dequeue` operation of the 
+// `QueueUsingTwoStacks` class. This operation is designed to 
+// remove the front element from our simulated queue, which 
+// is implemented using two stacks.
+void dequeue() {
+ 
+    // First, we check if `stack2` is empty. Recall that 
+    // in our implementation, `stack2` represents the front 
+    // of the queue. If `stack2` is empty, it means that we 
+    // haven't yet prepared any elements for removal.
+    if (stack2.empty()) {
+ 
+        // We iterate while `stack1` has elements. The goal 
+        // of this loop is to transfer elements from `stack1` 
+        // (back of the queue) to `stack2` (front of the queue) 
+        // such that the order is maintained.
+        //
+        // Essentially, the top of `stack1` (newest element) 
+        // becomes the bottom of `stack2`, while the bottom 
+        // of `stack1` (oldest element) becomes the top of 
+        // `stack2`. This reversal ensures that the oldest 
+        // enqueued element will be on the top of `stack2` 
+        // and can be dequeued efficiently.
+        while (!stack1.empty()) {
+            stack2.push(stack1.top()); // Transfer the top element of `stack1` to `stack2`.
+            stack1.pop();               // Remove the top element from `stack1` after transferring.
+        }
+    }
+ 
+    // At this point, either `stack2` already had elements 
+    // ready for removal, or we have just transferred them 
+    // from `stack1`. We can now remove the top element from 
+    // `stack2`, which represents the front of our queue.
+    //
+    // Note: The additional check for `stack2` being non-empty 
+    // ensures that we don't try to pop from an empty stack, 
+    // which would be an error.
+    if (!stack2.empty()) {
+        stack2.pop();
+    }
+}

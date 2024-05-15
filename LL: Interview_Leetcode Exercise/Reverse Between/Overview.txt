@@ -1,0 +1,363 @@
+#INTRODUCTION 
+
+LL: Reverse Between ( ** Interview Question)
+⚠️ Advanced Challenge Alert: Linked List Mastery!
+
+Welcome to what many consider the pinnacle of Linked List challenges in this course! This exercise is not just a test of your coding skills, but also a measure of your problem-solving ability and understanding of complex data structures.
+
+Here's how you can tackle it:
+
+Visualize the Problem: Before diving into coding, grab a pen and paper. Sketch out the linked list and visualize each step of the process. This approach isn't just for beginners; it's exactly how seasoned developers plan their attack on complex problems.
+
+Seek Understanding Over Speed: Take your time to really grasp each part of the problem. The goal here is deep understanding, not just a quick solution. If you find yourself stuck, that's a part of the learning process.
+
+It's Okay to Take a Break: Feel free to step away from this challenge and return later. This course is designed to equip you with a growing set of skills, and sometimes, a bit of distance can bring new insights.
+
+Approach Like a Pro: Remember, facing a challenging problem is what being a professional developer is all about. Use this exercise to think, plan, and code like a pro.
+
+
+
+Now, let's dive into the exercise:
+
+___________________________________
+
+
+
+Implement the reverseBetween member function for the LinkedList class, which reverses the nodes of the list from the indexes m to n (the positions are 0-indexed).
+
+Note:  This linked list class does NOT have a tail which will make this method easier to implement.
+
+
+
+Function Signature:
+
+void reverseBetween(int m, int n)
+
+
+Assumption: You can assume that m and n are not out of bounds.
+
+
+
+Example:
+
+Consider the following singly linked list:
+
+1 -> 2 -> 3 -> 4 -> 5 -> nullptr
+
+
+
+For the given list, the function ll.reverseBetween(1, 3) should modify the list to be:
+
+1 -> 4 -> 3 -> 2 -> 5 -> nullptr
+
+
+
+The sublist from the indexes from 1 to 3 has been reversed.
+
+
+
+I highly recommend that you draw the Linked List out on a piece of paper so you can visualize the steps.
+
+
+
+
+
+To assist you in the implementation and troubleshooting, a test suite has been provided in the Test.cpp file. This file contains a series of tests that validate the functionality of your code and will output to the "User logs" tab.
+
+You can also edit the Test.cpp file if you would like to create your own tests.
+
+
+
+#HINT
+
+Pseudo Code:
+
+Define a function called reverseBetween with parameters m and n. This function is a member of the LinkedList class.
+
+Check if the linked list is empty (i.e., head is a nullptr). If it is, return.
+
+Create a new Node pointer dummy with a value of 0, and set its next attribute to be the head of the linked list.
+
+Initialize a Node pointer prev to be dummy.
+
+Move prev to the (m)-th node in the linked list by iterating from 0 to (m-1) (not inclusive) and updating prev to be its next node.
+
+Set a Node pointer current to be the next attribute of the prev node, i.e., the m-th node in the linked list.
+
+Reverse the segment between positions m and n by iterating from 0 to (n-m) (not inclusive) and performing the following steps:
+
+Create a Node pointer temp and set it to be the next attribute of the current node.
+
+Update the next attribute of current to be the next attribute of temp.
+
+Update the next attribute of temp to be the next attribute of prev.
+
+Update the next attribute of prev to be temp.
+
+Finally, update the head of the linked list to be the next attribute of the dummy node.
+
+Delete the dummy node to prevent memory leaks.
+
+
+
+
+
+Explained another way:
+
+
+
+Imagine we have a line of numbered Lego blocks. Each block has a number on it, and each block can point to the next block in line.
+
+The 'reverse_between' game involves reversing the order of some of the blocks in the line, specifically the blocks between position 'm' and 'n'.
+
+
+
+Let's write down the steps for this game:
+
+
+
+If we only have one Lego block, then there's nothing to reverse, so just stop the game here.
+
+Create a new Lego block called 'dummy' and make it point to the first block in the line. This block will help us remember where the line starts.
+
+Move a marker called 'prev' from the dummy block to the 'm' position. 'prev' is just like a bookmark that remembers where we need to start reversing.
+
+Now, mark the 'm' position as 'current'. We'll begin reversing from here.
+
+Repeat the next steps until we reach the 'n' position:
+
+Pick the block that's right after the 'current' block. Call it 'temp' (as in temporary).
+
+Now make the 'current' block point to the block that's after 'temp'. This effectively removes 'temp' from its original spot.
+
+Then make 'temp' point to the block that 'prev' is pointing at.
+
+Finally, make 'prev' point to 'temp'. This places 'temp' at the start of the segment to be reversed.
+
+When all blocks between 'm' and 'n' have been reversed, update the first block in the line to be the one after 'dummy'.
+
+
+
+
+
+
+
+Explained yet another way:
+
+Let's imagine we have a group of kids lined up for a race and each kid is assigned a number from 1 to the length of the line. The numbers represent the positions in the line.
+
+But just before the race begins, the race coach says, "Hey kids, we're going to shake things up a bit. I want those of you between position m and position n to reverse your positions, but the rest of you stay where you are!"
+
+This is similar to what the reverse_between method in the LinkedList class does. It takes in two positions (m and n), and reverses the nodes (kids) between these two positions.
+
+So how does it do this? Let's break it down:
+
+First, the method checks if the linked list only has one node (kid). If yes, there's no need to reverse anything, so it just returns.
+
+It then creates a 'dummy' node. This is like having an extra coach to keep track of the start of the line.
+
+The method then goes through the line (linked list) from the start (head) to position m, keeping track of the node (kid) just before position m (the 'prev' node).
+
+Now, the method begins the reversing process. It starts at position m and goes up to n, reversing the links (order of kids) one by one. It does this by continually taking the next node (kid) and placing it right after the 'prev' node (the kid just before m).
+
+Finally, it adjusts the head of the linked list to point to the first kid in the line (which is the next node of the dummy).
+
+And there you have it - a segment of the line (linked list) has been reversed, just like the coach wanted!
+
+#SOLUTION
+
+        void reverseBetween(int m, int n) {
+            if (head == nullptr) return;
+    
+            Node* dummy = new Node(0);
+            dummy->next = head;
+            Node* prev = dummy;
+    
+            for (int i = 0; i < m; i++) {
+                prev = prev->next;
+            }
+    
+            Node* current = prev->next;
+            for (int i = 0; i < n - m; i++) {
+                Node* temp = current->next;
+                current->next = temp->next;
+                temp->next = prev->next;
+                prev->next = temp;
+            }
+    
+            head = dummy->next;
+            delete dummy;
+        }
+
+
+
+
+Given the list:
+1 → 2 → 3 → 4 → 5.
+
+
+With 0-based indexing, our goal is to  Reverse nodes between indices 1 and 3 (inclusive) to achieve the result:
+1 → 4 → 3 → 2 → 5.
+
+
+
+Detailed Walkthrough:
+
+
+
+Preliminary Steps:
+
+Check if the list is empty:
+
+if (head == nullptr) return;
+If the list is empty, there's nothing to reverse. So, we return immediately.
+
+
+
+Create a dummy node:
+
+Node* dummy = new Node(0);
+dummy->next = head;
+The dummy node is a trick used to simplify boundary conditions, especially when the start of the reversal is the first node.
+
+
+
+Preparation:
+
+Advance to the node right before the start of the reversal:
+
+Node* prev = dummy;
+for (int i = 0; i < m; i++) {
+    prev = prev->next;
+}
+For instance, if the reversal starts at index 1, prev will point to node 1 (at index 0).
+
+
+
+Set current to the beginning of the reversal segment:
+
+Node* current = prev->next;
+Consequently, current will now point to node 2, indicating the start of our reversal.
+
+
+
+The Core Loop:
+
+Reverse the nodes between m and n:
+
+for (int i = 0; i < n - m; i++) {
+    Node* temp = current->next;
+    current->next = temp->next;
+    temp->next = prev->next;
+    prev->next = temp;
+}
+
+
+Demonstrating with our example where we reverse nodes from indices 1 through 3:
+
+First iteration (Reversing node at index 2, i.e., node 3):
+
+temp = current->next: temp is directed to node 3.
+
+current->next = temp->next: Node 2 (our current) now points to node 4, bypassing node 3. Intermediate State: 1 → 2 → 4 → 5 with node 3 (temp) being detached.
+
+temp->next = prev->next: Node 3 (temp) now points to node 2.
+
+prev->next = temp: Node 1 (prev) links to node 3. Result: 1 → 3 → 2 → 4 → 5.
+
+
+
+Second iteration (Reversing node at index 3, i.e., node 4):
+
+temp = current->next: temp refers to node 4.
+
+current->next = temp->next: Node 2 now connects to node 5, sidestepping node 4. Intermediate State: 1 → 3 → 2 → 5 and node 4 (temp) floats.
+
+temp->next = prev->next: Node 4 (temp) connects to node 3.
+
+prev->next = temp: Node 1 (prev) links to node 4. Result: 1 → 4 → 3 → 2 → 5, our intended reversed order!
+
+
+
+Finalization:
+
+Adjust the list head and clean up:
+
+head = dummy->next;
+delete dummy;
+This step assures that if the original first node was involved in the reversal, the head now correctly marks the list's start. We then free the memory occupied by the dummy node.
+
+
+
+If you're finding this challenging, visual aids, such as diagrams or even using physical items like blocks and arrows, can help. Also, for an even more in-depth understanding, please refer to the "Code with inline comments" below:
+
+
+
+
+
+Code with inline comments:
+
+
+
+void reverseBetween(int m, int n) {
+    // 1. Initial Check:
+    // If the list is empty, there's nothing to reverse.
+    // So, exit the function without doing anything.
+    if (head == nullptr) return;
+ 
+    // 2. Dummy Node Creation:
+    // We initiate a new 'dummy' node with value 0.
+    // This is a trick to simplify the edge cases.
+    Node* dummy = new Node(0);
+ 
+    // Connect our actual list right after the dummy node.
+    // So, the dummy node temporarily stands before the head.
+    dummy->next = head;
+ 
+    // 3. Positioning 'prev':
+    // Start with 'prev' pointing to the dummy node.
+    Node* prev = dummy;
+ 
+    // Move 'prev' up to the node just before the starting
+    // point of the section we want to reverse.
+    for (int i = 0; i < m; i++) {
+        prev = prev->next;
+    }
+ 
+    // 4. Setting up 'current':
+    // 'current' is set right after 'prev'.
+    // It marks the start of the section to be reversed.
+    Node* current = prev->next;
+ 
+    // 5. Main Reversal Logic:
+    // We now enter our core reversal loop.
+    for (int i = 0; i < n - m; i++) {
+        // 'temp' points to the node that's next in line
+        // for our reversal process.
+        Node* temp = current->next;
+ 
+        // Detach 'temp' from the current sequence by
+        // making 'current' skip over 'temp'.
+        current->next = temp->next;
+ 
+        // To move 'temp' to the start of our reversed section,
+        // we first let 'temp' point to whatever node 'prev' is pointing to.
+        temp->next = prev->next;
+ 
+        // Finally, we adjust 'prev' to point to 'temp', thereby
+        // moving 'temp' to the front of the reversed section.
+        prev->next = temp;
+    }
+ 
+    // 6. Updating Head:
+    // If our reversed section included the original head of the list,
+    // our list's head would have changed. 
+    // So, we need to update the head of our list.
+    head = dummy->next;
+ 
+    // 7. Cleanup:
+    // The dummy node has served its purpose.
+    // We free up its memory to avoid memory leaks.
+    delete dummy;
+}
+

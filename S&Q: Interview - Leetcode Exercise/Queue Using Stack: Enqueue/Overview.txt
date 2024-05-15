@@ -1,0 +1,140 @@
+#INTRODUCTION
+
+Queue Using Stacks: Enqueue ( ** Interview Question) NEW
+In a typical queue, the enqueue operation is used to add an item to the end of the queue. In this problem, you are required to implement the enqueue method, but there's a twist. The underlying data structure is not a typical array or linked list; instead, you are using two stacks (stack1 and stack2) to simulate the behavior of a queue.
+
+
+
+Background:
+
+A stack is a Last-In-First-Out (LIFO) data structure. A queue, on the other hand, is a First-In-First-Out (FIFO) data structure. The challenge here is to use the properties of two stacks to simulate the behavior of a queue. Specifically, you will be working with the enqueue operation, which should add items to the end of the simulated queue.
+
+You're provided with a partial implementation of the QueueUsingTwoStacks class. Here's what you have:
+
+A front method that retrieves the front element of the queue without removing it.
+
+An isEmpty method that checks if the queue is empty.
+
+A partially implemented enqueue method.
+
+The two stacks are represented by stack1 and stack2.
+
+
+
+Task:
+
+Complete the enqueue method of the QueueUsingTwoStacks class.
+
+
+
+Constraints:
+
+The enqueue operation should have a time complexity of O(1). This means you can only use constant-time operations in its implementation.
+
+You can only use standard stack operations: push, pop, top, and empty.
+
+You should not use any other data structures or helper methods.
+
+
+Tips:
+
+The enqueue operation in a typical queue adds an item to the end. Think about how the order of items in a stack can be manipulated using another stack to maintain the order of items as in a queue.
+
+stack1 will primarily be used to handle enqueue operations, while stack2 will be used to handle dequeue and front operations. This is evident from the existing front method provided.
+
+Always keep in mind the behavior of a queue: items are added at the end and removed from the front. With two stacks at your disposal, you need to figure out a way to ensure this behavior.
+
+#HINT
+
+Pseudo Code:
+
+Function enqueue:
+
+Input: value
+
+Actions:
+
+Push value onto stack1.
+
+End Function.
+
+#SOLUTION
+
+
+    void enqueue(int value) {
+        stack1.push(value);
+    }
+
+
+
+
+This function is a method within a class called QueueUsingTwoStacks. The main idea behind the class is to implement a queue using two stacks. Stacks are last-in, first-out (LIFO) structures, while queues are first-in, first-out (FIFO). Hence, using two stacks can help us simulate the behavior of a queue.
+
+Now, let's dive deeper into the enqueue function:
+
+Function Signature:
+
+void QueueUsingTwoStacks::enqueue(int value): The function name is enqueue, and it belongs to the QueueUsingTwoStacks class. It has a void return type, meaning it doesn't return any value. It takes a single integer argument, value, which is the value that needs to be added to the back of our simulated queue.
+
+Function Body:
+
+stack1.push(value);: We push the given value onto stack1.
+
+Why this approach?
+
+The logic behind this function's simplicity lies in the larger context of how we implement the dequeue operation using two stacks. Here's a brief understanding:
+
+When we enqueue, we are adding an element to the back of the queue. With a single stack, this operation is straightforward because pushing to a stack always adds an element to the top. So, we can consider the top of stack1 as the back of our queue.
+
+For the dequeue operation (assuming it has been implemented as typically done using two stacks):
+
+If stack2 is not empty, the top of stack2 represents the front of the queue, and we just pop from stack2.
+
+If stack2 is empty (and assuming stack1 isn't), we pop all elements from stack1 and push them onto stack2. This process reverses the order of elements, so the last element added to stack1 (i.e., the back of the queue) becomes the first element in stack2 (i.e., the front of the queue). After this transfer, the dequeue operation becomes a simple pop from stack2.
+
+Why don't we need to check stack2 when enqueuing?
+
+For the following reasons:
+
+Separation of Concerns: The enqueue operation is only concerned about adding an element to the back of the queue. It doesn't need to worry about the front of the queue, which is managed by stack2.
+
+Efficiency: Checking or manipulating stack2 during the enqueue operation would add unnecessary complexity. The beauty of this two-stack solution is that it allows each operation (enqueue and dequeue) to be efficient by working mostly with one stack at a time.
+
+Correctness: enqueue only deals with adding to the back of the queue. Regardless of the state of stack2, pushing to stack1 always correctly represents adding an element to the back.
+
+In conclusion, the given enqueue method is an elegant example of how using two stacks can allow for the efficient simulation of queue operations, even though stacks and queues are fundamentally different data structures.
+
+
+
+
+
+Code with inline comments:
+
+
+
+// The method definition for the `enqueue` operation of the 
+// `QueueUsingTwoStacks` class. This class aims to implement 
+// a queue (a first-in, first-out data structure) using two 
+// stacks (last-in, first-out data structures).
+ 
+void enqueue(int value) {
+ 
+    // The primary goal of the `enqueue` operation is to 
+    // add an element to the back of the queue. In the context 
+    // of our two-stack-based simulation, we use `stack1` to 
+    // represent the back of the queue.
+    //
+    // Therefore, when we want to add (enqueue) an element, 
+    // we simply push it onto `stack1`. This ensures that the 
+    // most recently added element (the newest element) is 
+    // always on top of `stack1`, maintaining the queue's 
+    // order.
+    //
+    // Note: We don't interact with `stack2` in this operation 
+    // because `stack2` is mainly used for the dequeue operation 
+    // and represents the front of the queue. Manipulating 
+    // `stack2` here would be unnecessary and might complicate 
+    // the implementation without any benefits.
+ 
+    stack1.push(value);
+}
